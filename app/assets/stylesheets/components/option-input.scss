@@ -132,14 +132,18 @@
       padding-top: $sp3;
       padding-bottom: $sp3;
       display: grid;
+      padding: 0;
       .oi-pane-content {
         width: 100%;
         max-width: 20rem;
+        max-width: none;
+        height: 100%;
         background: $near-white;
         align-self: center;
         justify-self: center;
         header {
           background: $white;
+          background: none;
           padding: 1.5rem;
         }
         > div {

@@ -26,7 +26,7 @@ export default class MobileLayout extends Component {
             {activeFilters.map((filter, i) => (
               <FilterButton key={i} filter={filter} {...this.props} />
             ))}
-            <AddFilter {...this.props} />
+            <AddFilter {...this.props} desktopLayout='false' />
           </div>
         )}
       </div>

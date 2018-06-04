@@ -51,7 +51,7 @@ class FilterComponent extends Component {
     const Component = components[filter.get('key')]
     if (!Component) return null
     return (
-      <div className="oi-pane-content">
+      <div className="oi-pane-content" style={{maxWidth:'none', height: '100%'}}>
         {filter && (
           <header>
             <div>{filter.get('label')}</div>
@@ -87,7 +87,10 @@ FilterComponent.propTypes = {
 FilterComponent = clickOutside(FilterComponent)
 
 export default (props) => (
-  <div className="oi-pane">
+  <div
+    className="oi-pane"
+    style={{ height:'100%', width:'100%' }}
+  >
     <FilterComponent {...props} />
   </div>
 )

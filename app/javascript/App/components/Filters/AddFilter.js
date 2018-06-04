@@ -36,7 +36,16 @@ const AddFilters = (props) => {
     }
   } else if (filterKey === 'selectFilter') {
     return (
-      <div className="oi">
+      <div
+        className="oi"
+        style={{
+          position: 'absolute',
+          width: '50%',
+          height: '100%',
+          top: 0,
+          left: 0
+        }}>
+      >
         <SelectFilter {...{ ...props, uiKey }} />
       </div>
     )

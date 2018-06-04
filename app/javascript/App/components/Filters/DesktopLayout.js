@@ -19,7 +19,7 @@ export default class DesktopLayout extends Component {
           </div>
         ))}
         <div>
-          <AddFilter {...this.props} />
+          <AddFilter {...this.props} desktopLayout='true' />
         </div>
       </div>
     )
