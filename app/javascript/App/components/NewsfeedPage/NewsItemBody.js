@@ -6,6 +6,37 @@ import _ from 'lodash'
 import NewsItemCoinTags from './NewsItemCoinTags'
 
 export default class NewsItemBody extends Component {
+  constructor() {
+    super();
+    this.state = {
+      open: false,
+    };
+    this.toggleDrawer = this.toggleDrawer.bind(this);
+    this.closeDrawer = this.closeDrawer.bind(this);
+    this.openDrawer = this.openDrawer.bind(this);
+    this.onDrawerClose = this.onDrawerClose.bind(this);
+    this.setPosition = this.setPosition.bind(this);
+    this.setNoOverlay = this.setNoOverlay.bind(this);
+  }
+  setPosition(e) {
+    this.setState({position: e.target.value});
+  }
+  setNoOverlay(e) {
+    this.setState({noOverlay: e.target.checked});
+  }
+  toggleDrawer() {
+    this.setState({open: !this.state.open});
+  }
+  closeDrawer() {
+    this.setState({open: false});
+  }
+  openDrawer() {
+    console.log('open')
+    this.setState({open: true});
+  }
+  onDrawerClose() {
+    this.setState({open: false});
+  }
   render() {
     const {
       selectNewsItemFromList,
@@ -23,6 +54,7 @@ export default class NewsItemBody extends Component {
     return (
       <div className="pa4" style={mobileLayout ? {background:'#fff'} : {}}>
         <div onClick={unsetActiveEntity}>close</div>
+        <div onClick={this.openDrawer}>open</div>
         <NewsItemCoinTags newsItem={newsItem} />
         <h1>{newsItem.get('title')}</h1>
         <div className="mb3">
@@ -44,6 +76,8 @@ export default class NewsItemBody extends Component {
             ))}
           </div>
         )}
+
+
       </div>
     )
   }
