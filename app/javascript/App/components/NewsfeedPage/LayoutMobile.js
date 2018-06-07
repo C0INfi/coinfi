@@ -12,9 +12,9 @@ export default function(props) {
         <NewsItemList {...props} />
       </div>
       {activeEntity &&
-        currentUI('newsfeedModal') && (
+        (
           <div className="overlay">
-            <BodySection {...props} />
+            <BodySection {...props} mobileLayout />
           </div>
         )}
     </div>
