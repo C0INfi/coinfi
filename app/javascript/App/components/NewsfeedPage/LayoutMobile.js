@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import NewsItemList from './NewsItemList'
 import BodySection from './BodySection'
 import ActionBar from './ActionBar'
-import { Transition } from 'react-transition-group'
+import { CSSTransition } from 'react-transition-group'
 
+import './styles.css';
 
 export default class LayoutMobile extends Component {
 
@@ -12,20 +13,35 @@ export default class LayoutMobile extends Component {
     this.state = {
       show: false,
       entered: false,
+      showValidationMessage: false,
+      showValidationButton: false
     }
   }
 
   render() {
 
     const { activeEntity, currentUI } = this.props
-    const { show } = this.state;
+    const { show, showValidationMessage } = this.state
+    const duration = 300;
+    const pageTop = window.pageYOffset
 
-    let drawerStyle = {
-      top: 1000,
+    const defaultStyle = {
+      height: 200,
+      background: '#fff',
+      top: 1000 + pageTop,
+      transition: `all ${duration}ms ease`,
+    }
+
+    const transitionStyles = {
+      entering: { top: 1000 + pageTop },
+      entered:  { top: 200 + pageTop },
+    };
+
+    console.log('transitionStyles', transitionStyles)
+
+    var drawerStyle = {
       top: '20%',
       transition: 'all 400ms ease',
-      height: 800,
-      background: '#fff',
     }
 
 
@@ -33,44 +49,68 @@ export default class LayoutMobile extends Component {
       <div>
 
         <button
-          onClick={() => {
-            this.setState(state => ({
-              show: !state.show,
-            }))
-          }}
+            onClick={() => {
+              this.setState(state => ({
+                showValidationMessage: !this.state.showValidationMessage,
+              }));
+            }}
         >
           Toggle
         </button>
-        <Transition
-          in={show}
-          timeout={500}
-          unmountOnExit
-        >
-          {state => {
-            switch (state) {
-              case 'entering':
-                return 'Entering…'
-              case 'entered':
-                return 'Entered!'
-              case 'exiting':
-                return 'Exiting…'
-              case 'exited':
-                return 'Exited!'
-            }
-          }}
-        </Transition>
 
         <div className="bg-white">
           <ActionBar {...this.props} />
           <NewsItemList {...this.props} />
         </div>
-        {activeEntity &&
-            (
-              <div className="overlay" style={drawerStyle}>
-                <BodySection {...this.props} mobileLayout />
+
+        {/* {activeEntity && ( */}
+        {/* )} */}
+
+
+
+          <CSSTransition
+            in={showValidationMessage}
+            timeout={5000}
+            classNames="message"
+            unmountOnExit
+            onExited={() => {
+              console.log('exit')
+              this.setState({
+                showValidationButton: true,
+              });
+            }}
+          >
+            {state => {
+              console.log(state)
+            return (
+              <div>
+                <h1 className='message'>foobar top</h1>
+
+                {/* <div className="overlay" style={defaultStyle}> */}
+                {/*   <BodySection {...this.props} mobileLayout /> */}
+                {/* </div> */}
+
+              {/* <div style={{position: 'absolute', top: 0}}> */}
+              {/*   Your name rocks! */}
+                <CSSTransition
+                  in={state === 'entered'}
+                  timeout={300}
+                  classNames="star"
+                  unmountOnExit
+                >
+                <h1 style={{position:'absolute', top:200, padding:100}}>foobar enterex</h1>
+                  {/* <div className="star">⭐</div> */}
+
+                {/* <div className="overlay" style={defaultStyle}> */}
+                {/*   <BodySection {...this.props} mobileLayout /> */}
+                {/* </div> */}
+
+                </CSSTransition>
               </div>
-            )}
-          </div>
+            )}}
+          </CSSTransition>
+
+      </div>
     )
 
   }

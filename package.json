@@ -27,6 +27,7 @@
     "qs": "^6.5.1",
     "rc-slider": "^8.6.1",
     "react": "^16.2.0",
+    "react-addons-transition-group": "^15.6.2",
     "react-currency-formatter": "^1.1.0",
     "react-dom": "^16.2.0",
     "react-move": "^2.7.0",
