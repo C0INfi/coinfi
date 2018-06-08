@@ -38,6 +38,7 @@ export default class NewsItemBody extends Component {
     this.setState({open: false});
   }
   render() {
+    console.log(this.props.openDrawer)
     const {
       selectNewsItemFromList,
       activeEntity,

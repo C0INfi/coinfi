@@ -4,7 +4,6 @@ import BodySection from './BodySection'
 import ActionBar from './ActionBar'
 import { CSSTransition } from 'react-transition-group'
 
-import './styles.css';
 
 export default class LayoutMobile extends Component {
 
@@ -14,14 +13,22 @@ export default class LayoutMobile extends Component {
       show: false,
       entered: false,
       showValidationMessage: false,
-      showValidationButton: false
+      showValidationButton: false,
+      drawerOpen: false
     }
+  }
+
+  openDrawer() {
+    console.log('open')
+    this.setState({
+      drawerOpen: true
+    })
   }
 
   render() {
 
     const { activeEntity, currentUI } = this.props
-    const { show, showValidationMessage } = this.state
+    const { show, showValidationMessage, drawerOpen } = this.state
     const duration = 300;
     const pageTop = window.pageYOffset
 
@@ -48,15 +55,15 @@ export default class LayoutMobile extends Component {
     return (
       <div>
 
-        <button
-            onClick={() => {
-              this.setState(state => ({
-                showValidationMessage: !this.state.showValidationMessage,
-              }));
-            }}
-        >
-          Toggle
-        </button>
+        {/* <button */}
+        {/*     onClick={() => { */}
+        {/*       this.setState(state => ({ */}
+        {/*         drawerOpen: !this.drawerOpen */}
+        {/*       })); */}
+        {/*     }} */}
+        {/* > */}
+        {/*   Toggle */}
+        {/* </button> */}
 
         <div className="bg-white">
           <ActionBar {...this.props} />
@@ -69,7 +76,7 @@ export default class LayoutMobile extends Component {
 
 
           <CSSTransition
-            in={showValidationMessage}
+            in={drawerOpen}
             timeout={5000}
             classNames="message"
             unmountOnExit
@@ -101,9 +108,9 @@ export default class LayoutMobile extends Component {
                 <h1 style={{position:'absolute', top:200, padding:100}}>foobar enterex</h1>
                   {/* <div className="star">⭐</div> */}
 
-                {/* <div className="overlay" style={defaultStyle}> */}
-                {/*   <BodySection {...this.props} mobileLayout /> */}
-                {/* </div> */}
+                <div className="overlay" style={defaultStyle}>
+                  <BodySection {...this.props} mobileLayout openDrawer={this.openDrawer} />
+                </div>
 
                 </CSSTransition>
               </div>

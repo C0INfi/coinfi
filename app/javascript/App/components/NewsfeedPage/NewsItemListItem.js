@@ -4,7 +4,7 @@ import { stringHostname } from '../../lib/urlHelpers'
 import NewsItemCoinTags from './NewsItemCoinTags'
 
 const NewsItemListItem = (props) => {
-  const { activeEntity, newsItem, setActiveEntity, preRender } = props
+  const { activeEntity, newsItem, setActiveEntity, preRender, openDrawer } = props
   let className = 'bb b--light-gray tiber overflow-hidden'
   if (activeEntity) {
     const { type, id } = activeEntity
@@ -18,7 +18,7 @@ const NewsItemListItem = (props) => {
         <div
           className="pointer"
           onClick={() =>
-            setActiveEntity({ type: 'newsItem', id: newsItem.get('id') })
+            setActiveEntity({ type: 'newsItem', id: newsItem.get('id') }) && openDrawer
           }
         >
           <h4 className="fw6 mv3 f4">{newsItem.get('title')}</h4>
