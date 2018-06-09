@@ -7,9 +7,9 @@ import NewsItemCoinTags from './NewsItemCoinTags';
 import Icon from '../Icon';
 
 export default class NewsItemBody extends Component {
-  closeModal = (toggleUI, showComp) => {
+  closeModal = (toggleUI, hideComp) => {
     toggleUI('newsfeedModal', {toggleBodyScroll: window.isMobile});
-    showComp();
+    hideComp();
   };
   render() {
     const {
@@ -20,7 +20,6 @@ export default class NewsItemBody extends Component {
       mobileLayout,
       toggleUI,
       hideComp,
-      showComp,
     } = this.props;
     const {id} = activeEntity;
     const newsItem = selectNewsItemFromList(id);
@@ -33,7 +32,7 @@ export default class NewsItemBody extends Component {
         <Icon
           name="times"
           className="fr"
-          onClick={this.closeModal.bind(this, toggleUI, showComp)}
+          onClick={this.closeModal.bind(this, toggleUI, hideComp)}
           style={{float: 'right'}}
         />
         <NewsItemCoinTags newsItem={newsItem} />

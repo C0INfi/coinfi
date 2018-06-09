@@ -48,8 +48,8 @@ export default class LayoutMobile extends Component {
 
           <NewsItemList
             {...this.props}
-            showComp={ this.showComp }
-            hideComp={ this.hideComp }
+            showComp={ this.showComp.bind(this) }
+            hideComp={ this.hideComp.bind(this) }
           />
         </div>
         {activeEntity &&
