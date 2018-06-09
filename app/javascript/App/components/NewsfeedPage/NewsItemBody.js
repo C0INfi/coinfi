@@ -1,15 +1,16 @@
-import React, { Component } from 'react'
-import timeago from 'timeago.js'
-import sanitizeHtml from 'sanitize-html'
-import _ from 'lodash'
-import { stringHostname } from '../../lib/urlHelpers'
-import NewsItemCoinTags from './NewsItemCoinTags'
-import Icon from '../Icon'
+import React, {Component} from 'react';
+import timeago from 'timeago.js';
+import sanitizeHtml from 'sanitize-html';
+import _ from 'lodash';
+import {stringHostname} from '../../lib/urlHelpers';
+import NewsItemCoinTags from './NewsItemCoinTags';
+import Icon from '../Icon';
 
 export default class NewsItemBody extends Component {
-  closeModal = (toggleUI) => {
-    toggleUI('newsfeedModal', {'toggleBodyScroll': window.isMobile})
-  }
+  closeModal = (toggleUI, showComp) => {
+    toggleUI('newsfeedModal', {toggleBodyScroll: window.isMobile});
+    showComp();
+  };
   render() {
     const {
       selectNewsItemFromList,
@@ -17,17 +18,24 @@ export default class NewsItemBody extends Component {
       unsetActiveEntity,
       selectNewsItemCategories,
       mobileLayout,
-      toggleUI
-    } = this.props
-    const { id } = activeEntity
-    const newsItem = selectNewsItemFromList(id)
-    const categories = selectNewsItemCategories(newsItem)
-    if (!newsItem) return null
+      toggleUI,
+      hideComp,
+      showComp,
+    } = this.props;
+    const {id} = activeEntity;
+    const newsItem = selectNewsItemFromList(id);
+    const categories = selectNewsItemCategories(newsItem);
+    if (!newsItem) return null;
     const content =
-      _.trim(newsItem.get('content')) || _.trim(newsItem.get('summary'))
+      _.trim(newsItem.get('content')) || _.trim(newsItem.get('summary'));
     return (
-      <div className="pa4" style={mobileLayout ? {background:'#fff'} : {}}>
-        <Icon name="times" className="fr" onClick={this.closeModal.bind(this, toggleUI)} style={{float:'right'}} />
+      <div className="pa4" style={mobileLayout ? {background: '#fff'} : {}}>
+        <Icon
+          name="times"
+          className="fr"
+          onClick={this.closeModal.bind(this, toggleUI, showComp)}
+          style={{float: 'right'}}
+        />
         <NewsItemCoinTags newsItem={newsItem} />
         <h1>{newsItem.get('title')}</h1>
         <div className="mb3">
@@ -39,7 +47,7 @@ export default class NewsItemBody extends Component {
           </a>
         </div>
         <hr />
-        <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(content) }} />
+        <div dangerouslySetInnerHTML={{__html: sanitizeHtml(content)}} />
         {categories.size > 0 && (
           <div className="mt3">
             {categories.map((category, index) => (
@@ -50,6 +58,6 @@ export default class NewsItemBody extends Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }

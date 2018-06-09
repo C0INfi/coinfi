@@ -1,30 +1,45 @@
-import React from 'react'
-import timeago from 'timeago.js'
-import { stringHostname } from '../../lib/urlHelpers'
-import NewsItemCoinTags from './NewsItemCoinTags'
+import React from 'react';
+import timeago from 'timeago.js';
+import {stringHostname} from '../../lib/urlHelpers';
+import NewsItemCoinTags from './NewsItemCoinTags';
 
-const handleClick = (setActiveEntity, entity, setMargin, toggleUI) => {
-  setActiveEntity(entity)
-  toggleUI('newsfeedModal', {'toggleBodyScroll': window.isMobile})
-  setMargin && setMargin()
-}
+const handleClick = (setActiveEntity, entity, toggleUI, showComp, hideComp) => {
+  setActiveEntity(entity);
+  toggleUI('newsfeedModal', {toggleBodyScroll: window.isMobile});
+  showComp()
+};
 
-const NewsItemListItem = (props) => {
-  const { activeEntity, newsItem, setActiveEntity, preRender, setMargin, toggleUI } = props
-  let className = 'bb b--light-gray tiber overflow-hidden'
+const NewsItemListItem = props => {
+  const {
+    activeEntity,
+    newsItem,
+    setActiveEntity,
+    preRender,
+    setMargin,
+    toggleUI,
+    showComp,
+    hideComp
+  } = props;
+  let className = 'bb b--light-gray tiber overflow-hidden';
   if (activeEntity) {
-    const { type, id } = activeEntity
+    const {type, id} = activeEntity;
     if (type === 'newsItem' && id === newsItem.get('id'))
-      className += ' bg-foam'
+      className += ' bg-foam';
   }
-  if (preRender) className += ' o-0 absolute'
+  if (preRender) className += ' o-0 absolute';
   return (
-    <div className={className} style={{ height: props.height || 'auto' }}>
+    <div className={className} style={{height: props.height || 'auto'}}>
       <div className="pa3">
         <div
           className="pointer"
-          onClick={handleClick.bind(this, setActiveEntity, { type: 'newsItem', id: newsItem.get('id') }, setMargin, toggleUI)}
-        >
+          onClick={handleClick.bind(
+            this,
+            setActiveEntity,
+            {type: 'newsItem', id: newsItem.get('id')},
+            toggleUI,
+            showComp,
+            hideComp
+          )}>
           <h4 className="fw6 mv3 f4">{newsItem.get('title')}</h4>
         </div>
         <div className="flex justify-between flex-wrap">
@@ -35,8 +50,7 @@ const NewsItemListItem = (props) => {
               href={newsItem.get('url')}
               target="_blank"
               rel="nofollow"
-              className="dib silver"
-            >
+              className="dib silver">
               {stringHostname(newsItem.get('url'))}
             </a>
           </div>
@@ -44,7 +58,7 @@ const NewsItemListItem = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NewsItemListItem
+export default NewsItemListItem;
