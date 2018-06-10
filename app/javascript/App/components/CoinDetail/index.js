@@ -1,8 +1,16 @@
 import React, { Fragment } from 'react'
+import Icon from './../Icon'
 
 export default function(props) {
+
   return (
 	<div className="col-xs-12 col-md-4 flex flex-column">
+
+        <Icon
+          name="times"
+          className="fr"
+          onClick={props.hideCoinDetail}
+        />
 	  <div className="bg-white mb2">
 		<div className="pa3 tr"></div>
 		<div className="pa4 pt0">

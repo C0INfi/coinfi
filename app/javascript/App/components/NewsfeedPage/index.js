@@ -14,6 +14,14 @@ class NewsfeedPage extends Component {
   componentWillMount() {
     window.addEventListener('resize', debounce(() => this.forceUpdate()), 500)
   }
+
+  hideCoinDetail() {
+    console.log('showCoinDetail')
+    this.setState({
+      coinDetailVisible: false
+    })
+  }
+
   showCoinDetail() {
     console.log('showCoinDetail')
     this.setState({
@@ -23,7 +31,7 @@ class NewsfeedPage extends Component {
 
   render() {
     if (window.isMobile) {
-      return <LayoutMobile {...this.props} showCoinDetail={this.showCoinDetail.bind(this)} coinDetailVisible={this.state.coinDetailVisible} />
+      return <LayoutMobile {...this.props} showCoinDetail={this.showCoinDetail.bind(this)} hideCoinDetail={this.hideCoinDetail.bind(this)} coinDetailVisible={this.state.coinDetailVisible} />
     } else if (window.isTablet) {
       return <LayoutTablet {...this.props} />
     } else {
