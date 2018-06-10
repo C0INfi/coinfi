@@ -6,7 +6,6 @@ import CoinDetail from './../CoinDetail'
 
 export default function(props) {
   const { activeEntity, currentUI } = props
-  console.log('layoutmobile props', props)
   if (props.coinDetailVisible) {
     return (
 	  <CoinDetail {...props} />
