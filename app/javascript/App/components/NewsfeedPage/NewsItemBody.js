@@ -29,7 +29,7 @@ export default class NewsItemBody extends Component {
       <div className="pa4" style={mobileLayout ? {background:'#fff'} : {}}>
         <Icon name="times" className="fr" onClick={this.closeModal.bind(this, toggleUI)} style={{float:'right'}} />
         <NewsItemCoinTags newsItem={newsItem} />
-        <h1>{newsItem.get('title')}</h1>
+        <h1 style={{ wordBreak:'break-word' }}>{newsItem.get('title')}</h1>
         <div className="mb3">
           <span className="mr3">
             {timeago().format(newsItem.get('published_date'))}
