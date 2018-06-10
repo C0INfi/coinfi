@@ -1,4 +1,16 @@
 import React from 'react'
+import CoinDetail from './../CoinDetail'
+
+const ShowCoinDrawer = (event) => {
+  const slug = event.target.getAttribute('slug')
+  const url = `https://develop.coinfi.com/api/coins/${slug}.json`
+  console.log('show', url)
+  return (
+    <CoinDetail />
+  )
+
+}
+
 
 const NewsCoinTags = ({ newsItem }) => {
   return (
@@ -7,7 +19,8 @@ const NewsCoinTags = ({ newsItem }) => {
         <a
           key={index}
           className="tag pointer"
-          href={`/coins/${data.get('slug')}`}
+          onClick={ShowCoinDrawer}
+          slug={data.get('slug')}
         >
           {data.get('symbol')}
         </a>
