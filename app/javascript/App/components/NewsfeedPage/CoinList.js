@@ -5,12 +5,14 @@ import LoadingIndicator from '../LoadingIndicator'
 
 export default (props) => {
   const { isLoading, setActiveEntity, currentUI, isWatching } = props
-  const onClick = (coin) =>
+  const onClick = (coin) =>{
+
     setActiveEntity({
       type: 'coin',
       id: coin.get('id'),
       label: coin.get('name')
     })
+}
   let { coins } = props
   if (currentUI('watchingOnly')) {
     coins = props.coins.filter((coin) => isWatching(coin.get('id')))

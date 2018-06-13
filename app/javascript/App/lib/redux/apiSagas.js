@@ -10,6 +10,7 @@ export default {
   destroy
 }
 export function* get(url, params, callback, selector = false) {
+console.log('saga get', url)
   try {
     let response = null
     if (selector) {
