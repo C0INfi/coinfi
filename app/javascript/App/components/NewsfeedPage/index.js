@@ -23,7 +23,7 @@ class NewsfeedPage extends Component {
   showCoinDetail(slug) {
     this.setState({
       coinDetailVisible: true,
-      coinSlug: slug
+      coinSlug: slug,
     });
   }
 
@@ -39,9 +39,21 @@ class NewsfeedPage extends Component {
         />
       );
     } else if (window.isTablet) {
-      return <LayoutTablet {...this.props} />;
+      return <LayoutTablet
+        {...this.props}
+        showCoinDetail={this.showCoinDetail.bind(this)}
+        hideCoinDetail={this.hideCoinDetail.bind(this)}
+        coinDetailVisible={this.state.coinDetailVisible}
+        coinSlug={this.state.coinSlug}
+      />;
     } else {
-      return <LayoutDesktop {...this.props} />;
+      return <LayoutDesktop
+        {...this.props}
+        showCoinDetail={this.showCoinDetail.bind(this)}
+        hideCoinDetail={this.hideCoinDetail.bind(this)}
+        coinDetailVisible={this.state.coinDetailVisible}
+        coinSlug={this.state.coinSlug}
+      />;
     }
   }
 }

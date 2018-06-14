@@ -52,7 +52,7 @@ export default class CoinDetail extends Component {
     }
     return (
 
-      <div className="col-xs-12 col-md-4 flex flex-column" style={coinDetailStyle}>
+      <div className="flex flex-column" style={coinDetailStyle}>
         {!coinData.name && (
           <LoadingIndicator className="overlay bg-white-70" />
         )}
