@@ -28,7 +28,6 @@ export default class ItemSelectorAlt extends Component {
       return (
         <button className="selected" onClick={() => this.remove(item)}>
           <span className="mr2">
-            <Icon name="check" regular />
           </span>
           {this.itemLabel(item)}
         </button>
@@ -36,7 +35,6 @@ export default class ItemSelectorAlt extends Component {
     } else {
       return (
         <button onClick={() => this.add(item)}>
-          <Icon name="times" regular className="mr2" />
           {this.itemLabel(item)}
         </button>
       )
