@@ -39,7 +39,7 @@ class FilterPanel extends Component {
               {...pProps}
               filter={filter}
               onChange={this.onChange}
-              value={this.state.filters[filter.get('key')]}
+              value={this.state.filters}
             />
           )
         })}

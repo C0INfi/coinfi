@@ -5,12 +5,13 @@ import Icon from './Icon'
 export default class ItemSelectorAlt extends Component {
   selectedItems = () => this.props.selectedItems || []
   isSelected = (item) => {
-    const selected = this.selectedItems().map((item) => JSON.stringify(item))
-    return selected.includes(JSON.stringify(item))
+    // const selected = this.selectedItems().map((item) => JSON.stringify(item))
+    // return selected.includes(JSON.stringify(item))
   }
   add = (item) => {
     let items = this.selectedItems()
-    items.push(item)
+	if (!items.feedSources) items.feedSources = []
+    items.feedSources.push(item)
     this.props.onChange(items)
   }
   remove = (item) => {
@@ -59,6 +60,6 @@ export default class ItemSelectorAlt extends Component {
 
 ItemSelectorAlt.propTypes = {
   items: Type.array.isRequired,
-  selectedItems: Type.array,
+  selectedItems: Type.object,
   onChange: Type.func
 }
