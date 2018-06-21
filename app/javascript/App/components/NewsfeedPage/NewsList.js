@@ -1,15 +1,86 @@
 import React, { Component, Fragment } from 'react'
+import _ from 'lodash'
 import NewsListItemAnimated from './NewsListItemAnimated'
 import LoadingIndicator from '../LoadingIndicator'
 import Tips from './Tips'
 
 class NewsList extends Component {
   state = { initialRender: true, initialRenderTips:true }
+
+  constructor(props) {
+    super(props)
+    this.mountOnScrollHandler = this.mountOnScrollHandler.bind(this)
+    this.unmountOnScrollHandler = this.unmountOnScrollHandler.bind(this)
+    this.onScrollNewsFeedMobile = this.onScrollNewsFeedMobile.bind(this)
+    this.onScrollNewsFeedDesktop = this.onScrollNewsFeedDesktop.bind(this)
+  }
+
   componentDidMount() {
     setTimeout(() => {
       this.setState({ initialRender: false })
     }, 6000)
+
+    this.mountOnScrollHandler()
   }
+
+  componentDidUpdate() {
+    const timer = setInterval(() => {
+      if (!window.isMobile && !window.isTablet) {
+        const $newsfeed = $('#newsfeed')
+        if ($newsfeed.height() < $newsfeed.find('> div').get(0).clientHeight) {
+          clearInterval(timer)
+        } else {
+          this.props.fetchMoreNewsFeed()
+        }
+      } else {
+        clearInterval(timer)
+      }
+    }, 1000)
+  }
+
+  componentWillUnmount() {
+    this.unmountOnScrollHandler()
+  }
+
+  mountOnScrollHandler() {
+    if (window.isMobile) {
+      const throttled = _.throttle(this.onScrollNewsFeedMobile, 500)
+      $(window).scroll(throttled)
+    } else {
+      const throttled = _.throttle(this.onScrollNewsFeedDesktop, 500)
+      $('#newsfeed').scroll(throttled)
+    }
+  }
+
+  unmountOnScrollHandler() {
+    $(window).off('scroll', this.onScrollNewsFeedMobile)
+    $('#newsfeed').off('scroll', this.onScrollNewsFeedDesktop)
+  }
+
+  onScrollNewsFeedMobile(e) {
+    const $this = $(e.currentTarget)
+    const bufferSpace = $this.height() / 3 + 300
+
+    if (
+      $this.scrollTop() + $this.height() + bufferSpace >=
+      $(document).height()
+    ) {
+      this.props.fetchMoreNewsFeed()
+    }
+  }
+
+  onScrollNewsFeedDesktop(e) {
+    const $this = $(e.currentTarget)
+    const bufferSpace = $this.height() / 3 + 400
+
+    if (
+      $this.scrollTop() + $this.innerHeight() + bufferSpace >=
+      $this[0].scrollHeight
+    ) {
+      this.props.fetchMoreNewsFeed()
+    }
+  }
+
   setActiveNewsItem = (newsItem) => {
     const { setActiveEntity, enableUI } = this.props
     setActiveEntity({ type: 'newsItem', id: newsItem.get('id') })
@@ -70,16 +141,17 @@ class NewsList extends Component {
     return (
       <Fragment>
         <div
-          className="flex-auto overflow-y-auto relative"
+          id="newsfeed"
+          className="flex-auto relative overflow-y-hidden overflow-y-auto-m"
           style={
             !activeEntity && window.isMobile && !activeFilters.size && this.state.initialRenderTips
               ? {marginTop: '-155px', background: '#fff'}
               : {}
           }>
-          {isLoading('newsItems') && (
-            <LoadingIndicator className="overlay bg-white-70" />
-          )}
+            {!isLoading('newsItems') &&
+              isLoading('newsfeed') && <LoadingIndicator />}
           {this.renderView(viewState, itemHeight, activeFilters)}
+
         </div>
       </Fragment>
     )
