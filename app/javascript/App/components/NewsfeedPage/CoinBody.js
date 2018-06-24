@@ -6,7 +6,7 @@ import WatchButton from './WatchButton'
 import LoadingIndicator from '../LoadingIndicator'
 
 const CoinBody = (props) => {
-  const { selectCoinDetails, activeEntity, isLoading, user } = props
+  const { selectCoinDetails, activeEntity, isLoading } = props
   let coin = selectCoinDetails(activeEntity.id)
   if (!coin && isLoading('coin'))
     return <LoadingIndicator className="overlay bg-white-70" />
@@ -23,8 +23,9 @@ const CoinBody = (props) => {
           {coin.get('name')}
           <span className="ml2">({coin.get('symbol')})</span>
         </a>
-        <div>
-          <WatchButton {...props} coin={coin} />
+        <div className="tooltipped">
+          <WatchButton {...props} coin={coin} hasText />
+          {!user && <div className="tooltip">Login to watch</div>}
         </div>
       </div>
       <div className="min-h12e flex items-center justify-center">
@@ -49,6 +50,7 @@ const CoinBody = (props) => {
         symbol={coin.get('symbol')}
         priceData={coin.get('prices_data').toJS()}
         newsItems={coin.get('news_data').toJS()}
+        isTradingViewVisible={activeEntity.type !== 'coin'}
       />
     </div>
   )
