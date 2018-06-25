@@ -11,6 +11,7 @@ const FilterComponent = (props) => {
   if (!Component) {
     return null
   }
+  console.log('filter comp active', props.activeFilters)
   return (
     <Fragment>
       <div className="pv4 bb b--geyser" style={newsFeedStyle ? {paddingTop:'.5rem', paddingBottom:'1.5rem'}: ''}>

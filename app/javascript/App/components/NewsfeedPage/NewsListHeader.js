@@ -9,6 +9,7 @@ const NewsListHeader = (props) => {
   const { enableUI, currentUI, coins, feedSources, activeFilters } = props
   const toggleFilters = () =>
     enableUI('filterPanel', { fullScreen: window.isMobile })
+  console.log('active', activeFilters)
   return (
     <Fragment>
       <SectionHeader>
