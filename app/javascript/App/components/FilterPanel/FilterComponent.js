@@ -11,14 +11,14 @@ const FilterComponent = (props) => {
   // if (!Component) {
   //   return null
   // }
-    console.log('current', props.currentFilters)
-    console.log(props.filterList)
-        {props.filterList.map((filter, index) => {
-          if (filter.get('key') === 'coins') return null // Temp fix for hiding coins
-          if (filter.get('key') === 'keywords') return null
-            console.log('schema', index, filter)
-        })
-        }
+  console.log('current', props.selectedFilters)
+  // console.log(props.filterList)
+  {props.filterList.map((filter, index) => {
+    if (filter.get('key') === 'coins') return null // Temp fix for hiding coins
+    if (filter.get('key') === 'keywords') return null
+    // console.log('schema', index, filter)
+  })
+  }
 
   return (
     <Fragment>

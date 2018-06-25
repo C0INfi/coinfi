@@ -17,6 +17,9 @@ export default (namespace) => ({
   onFilterInitialize: (payload) => {
     return { namespace, type: 'ON_FILTER_INITIALIZE', payload }
   },
+  getFilters: (payload) => {
+    return { namespace, type: 'GET_FILTERS', payload }
+  }
   setFilters: (payload) => {
     return { namespace, type: 'SET_FILTERS', payload }
   }

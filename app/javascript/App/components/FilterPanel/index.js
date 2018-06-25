@@ -5,13 +5,30 @@ import FilterComponent from './FilterComponent'
 import { normalizeFilterData } from '../../lib/stateHelpers'
 
 class FilterPanel extends Component {
-  state = { filters: {} }
+  state = {
+      filters: {},
+      selectedFilters: []
+  }
   componentWillMount() {
+    let selectedFilterList = []
     this.props.activeFilters.forEach((filter) => {
-        console.log('active filter', filter, filter.get('key'), filter.get('value'))
+      // console.log('active filter', filter, filter.get('key'), filter.get('value'))
+      // selectedFilterList.push({filter.get('key'): filter.get('value')})
       // this.onChange(filter.get('key'))(filter.get('value'))
     })
-        // create filter obj structure and set state
+  }
+
+  componentDidMount() {
+    let selectedFilterList = []
+    this.props.activeFilters.forEach((filter) => {
+      // console.log('active filter', filter, filter.get('key'), filter.get('value'))
+      selectedFilterList.push({[filter.get('key')]: filter.get('value')})
+    })
+
+    this.setState({
+      selectedFilters: selectedFilterList
+    })
+
   }
   onChange = (key) => (value) => {
     const filters = { ...this.state.filters }
@@ -22,7 +39,7 @@ class FilterPanel extends Component {
   }
   applyFilters = () => {
     const { setFilters, disableUI } = this.props
-      console.log('applyFilters', this.state.filters)
+      // console.log('applyFilters', this.state.filters)
     setFilters(this.state.filters)
     disableUI('filterPanel')
   }
@@ -33,12 +50,15 @@ class FilterPanel extends Component {
     const { filterList, filterData, ...props } = this.props
     const pProps = { ...props, filterData: normalizeFilterData(filterData) }
     const { applyFilters, resetFilters } = this
+
+
     return (
       <Layout {...{ ...props, applyFilters, resetFilters }} newsFeedStyle>
             <FilterComponent
               {...pProps}
               onChange={this.onChange}
               value={this.state.filters}
+              selectedFilters={this.state.selectedFilters}
               filterList={filterList}
               currentFilters={this.state.filters}
               newsFeedStyle

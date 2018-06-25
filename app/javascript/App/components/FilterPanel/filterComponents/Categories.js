@@ -2,13 +2,16 @@ import React from 'react'
 import Type from 'prop-types'
 import ItemSelectorCategory from '../../ItemSelectorCategory'
 
-const Categories = ({ categories, value, onChange }) => (
+const Categories = ({ categories, value, onChange, selectedFilters }) => {
+    console.log('passed to cat', selectedFilters)
+return (
   <ItemSelectorCategory
     items={categories}
     selectedItems={value}
     onChange={onChange('categories')}
   />
 )
+}
 
 Categories.propTypes = {
   value: Type.object,

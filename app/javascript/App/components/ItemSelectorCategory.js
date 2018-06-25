@@ -5,6 +5,7 @@ import Icon from './Icon'
 export default class ItemSelectorCategory extends Component {
   selectedItems = () => this.props.selectedItems || []
   isSelected = (item) => {
+    console.log('selected items', this.props.selectedItems)
     const selected = this.selectedItems().categories && this.selectedItems().categories.length && this.selectedItems().categories.map((item) => JSON.stringify(item))
     if (selected) return selected.includes(JSON.stringify(item))
   }
