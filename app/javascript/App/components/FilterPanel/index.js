@@ -8,14 +8,35 @@ class FilterPanel extends Component {
   state = { filters: {} }
   componentWillMount() {
     this.props.activeFilters.forEach((filter) => {
-      this.onChange(filter.get('key'))(filter.get('value'))
+      // this.onChange(filter.get('key'))(filter.get('value'))
+      //
+      // todo: clicking filter button mounts filter pane, which triggers onChange for key / value
+      // this causes the category or source to be selected, whichever is last
     })
+  }
+  componentDidMount() {
+    const filters = { ...this.state.filters }
+    this.props.activeFilters.forEach((value) => {
+      // console.log('active: filter', filter)
+    if (value.toJS) value = value.toJS()
+    filters[value.key] = value.value
+    this.setState({ filters })
+      // this.onChange(filter.get('key'))(filter.get('value'))
+      //
+      // todo: clicking filter button mounts filter pane, which triggers onChange for key / value
+      // this causes the category or source to be selected, whichever is last
+    })
+
   }
   onChange = (key) => (value) => {
     const filters = { ...this.state.filters }
+    // has category and sources filter arr
     if (value.toJS) value = value.toJS()
     filters[key] = value
+    console.log('on change filters', filters)
     this.setState({ filters })
+    // todo :call setState will trigger showing selected category or source
+    // and handle toggle of selected cat
   }
   applyFilters = () => {
     const { setFilters, disableUI } = this.props
