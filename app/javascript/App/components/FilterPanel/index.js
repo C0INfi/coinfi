@@ -8,17 +8,21 @@ class FilterPanel extends Component {
   state = { filters: {} }
   componentWillMount() {
     this.props.activeFilters.forEach((filter) => {
-      this.onChange(filter.get('key'))(filter.get('value'))
+        console.log('active filter', filter, filter.get('key'), filter.get('value'))
+      // this.onChange(filter.get('key'))(filter.get('value'))
     })
+        // create filter obj structure and set state
   }
   onChange = (key) => (value) => {
     const filters = { ...this.state.filters }
     if (value.toJS) value = value.toJS()
     filters[key] = value
+      // get filter obj structure
     this.setState({ filters })
   }
   applyFilters = () => {
     const { setFilters, disableUI } = this.props
+      console.log('applyFilters', this.state.filters)
     setFilters(this.state.filters)
     disableUI('filterPanel')
   }
@@ -31,20 +35,14 @@ class FilterPanel extends Component {
     const { applyFilters, resetFilters } = this
     return (
       <Layout {...{ ...props, applyFilters, resetFilters }} newsFeedStyle>
-        {filterList.map((filter, index) => {
-          if (filter.get('key') === 'coins') return null // Temp fix for hiding coins
-          if (filter.get('key') === 'keywords') return null
-          return (
             <FilterComponent
-              key={index}
               {...pProps}
-              filter={filter}
               onChange={this.onChange}
               value={this.state.filters}
+              filterList={filterList}
+              currentFilters={this.state.filters}
               newsFeedStyle
             />
-          )
-        })}
       </Layout>
     )
   }

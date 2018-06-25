@@ -6,11 +6,20 @@ import Categories from './filterComponents/Categories'
 import FeedSources from './filterComponents/FeedSources'
 
 const FilterComponent = (props) => {
-  const { filter, newsFeedStyle } = props
-  const Component = components[filter.get('key')]
-  if (!Component) {
-    return null
-  }
+  const { newsFeedStyle } = props
+  // const Component = components[filter.get('key')]
+  // if (!Component) {
+  //   return null
+  // }
+    console.log('current', props.currentFilters)
+    console.log(props.filterList)
+        {props.filterList.map((filter, index) => {
+          if (filter.get('key') === 'coins') return null // Temp fix for hiding coins
+          if (filter.get('key') === 'keywords') return null
+            console.log('schema', index, filter)
+        })
+        }
+
   return (
     <Fragment>
       <div className="pv4 bb b--geyser" style={newsFeedStyle ? {paddingTop:'.5rem', paddingBottom:'1.5rem'}: ''}>
@@ -33,7 +42,6 @@ export default FilterComponent
 
 FilterComponent.propTypes = {
   activeFilters: Types.object.isRequired,
-  filter: Types.object.isRequired,
   setFilter: Types.func.isRequired,
   removeFilter: Types.func.isRequired
 }
