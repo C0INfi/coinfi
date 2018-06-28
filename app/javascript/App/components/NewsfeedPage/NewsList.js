@@ -3,80 +3,215 @@ import _ from 'lodash'
 import NewsListItem from './NewsListItem'
 import LoadingIndicator from '../LoadingIndicator'
 import Tips from './Tips'
+import ReactList from 'react-list'
+
+
+const renderItem = (index, key) =>
+  <div key={key} className={'item' + (index % 2 ? '' : ' even')}>
+    {index}
+  </div>;
+renderItem.toJSON = () => renderItem.toString();
+
+const renderSquareItem = (index, key) =>
+  <div key={key} className={'square-item' + (index % 2 ? '' : ' even')}>
+    {index}
+  </div>;
+renderSquareItem.toJSON = () => renderSquareItem.toString();
+
+const getHeight = index => 30 + (10 * (index % 10));
+getHeight.toJSON = () => getHeight.toString();
+
+const getWidth = index => 100 + (10 * (index % 10));
+getWidth.toJSON = () => getWidth.toString();
+
+const renderVariableHeightItem = (index, key) =>
+  <div
+    key={key}
+    className={'item' + (index % 2 ? '' : ' even')}
+    style={{lineHeight: `${getHeight(index)}px`}}
+  >
+    {index}
+  </div>;
+renderVariableHeightItem.toJSON = () => renderVariableHeightItem.toString();
+
+const renderVariableWidthItem = (index, key) =>
+  <div
+    key={key}
+    className={'item' + (index % 2 ? '' : ' even')}
+    style={{width: `${getWidth(index)}px`}}
+  >
+    {index}
+  </div>;
+renderVariableWidthItem.toJSON = () => renderVariableWidthItem.toString();
+
+const renderGridLine = (row, key) =>
+  <ReactList
+    axis='x'
+    key={key}
+    length={10000}
+    itemRenderer={
+      (column, key) => renderSquareItem(column + (10000 * row), key)
+    }
+    type='uniform'
+  />;
+renderGridLine.toJSON = () => renderGridLine.toString();
+
+const examples = [
+  {
+    length: 10000,
+    itemRenderer: renderVariableHeightItem
+  },
+  {
+    axis: 'x',
+    length: 10000,
+    itemRenderer: renderVariableWidthItem
+  },
+  {
+    length: 10000,
+    itemRenderer: renderVariableHeightItem,
+    type: 'variable'
+  },
+  {
+    axis: 'x',
+    length: 10000,
+    itemRenderer: renderVariableWidthItem,
+    type: 'variable'
+  },
+  {
+    length: 10000,
+    itemRenderer: renderVariableHeightItem,
+    itemSizeGetter: getHeight,
+    type: 'variable'
+  },
+  {
+    axis: 'x',
+    length: 10000,
+    itemRenderer: renderVariableWidthItem,
+    itemSizeGetter: getWidth,
+    threshold: 0,
+    type: 'variable'
+  },
+  {
+    length: 10000,
+    initialIndex: 5000,
+    itemRenderer: renderVariableHeightItem,
+    itemSizeGetter: getHeight,
+    type: 'variable'
+  },
+  {
+    length: 10000,
+    itemRenderer: renderItem,
+    type: 'uniform'
+  },
+  {
+    axis: 'x',
+    length: 10000,
+    itemRenderer: renderItem,
+    type: 'uniform'
+  },
+  {
+    length: 10000,
+    itemRenderer: renderSquareItem,
+    type: 'uniform'
+  },
+  {
+    length: 10000,
+    initialIndex: 5000,
+    itemRenderer: renderItem,
+    type: 'uniform'
+  },
+  {
+    length: 10000,
+    itemRenderer: renderGridLine,
+    type: 'uniform',
+    useTranslate3d: true
+  }
+];
+
 
 class NewsList extends Component {
-  state = { initialRender: true, initialRenderTips:false }
+  state = { initialRender: true, initialRenderTips:false,
+    accounts: []
+  }
 
   constructor(props) {
     super(props)
-    this.mountOnScrollHandler = this.mountOnScrollHandler.bind(this)
-    this.unmountOnScrollHandler = this.unmountOnScrollHandler.bind(this)
-    this.onScrollNewsFeedMobile = this.onScrollNewsFeedMobile.bind(this)
-    this.onScrollNewsFeedDesktop = this.onScrollNewsFeedDesktop.bind(this)
+    // this.mountOnScrollHandler = this.mountOnScrollHandler.bind(this)
+    // this.unmountOnScrollHandler = this.unmountOnScrollHandler.bind(this)
+    // this.onScrollNewsFeedMobile = this.onScrollNewsFeedMobile.bind(this)
+    // this.onScrollNewsFeedDesktop = this.onScrollNewsFeedDesktop.bind(this)
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ initialRender: false })
-    }, 6000)
-    this.mountOnScrollHandler()
+    // setTimeout(() => {
+    //   this.setState({ initialRender: false })
+    // }, 6000)
+    // this.mountOnScrollHandler()
   }
 
   componentDidUpdate() {
-    const timer = setInterval(() => {
-      if (!window.isMobile && !window.isTablet) {
-        const $newsfeed = $('#newsfeed')
-        if ($newsfeed.height() < $newsfeed.find('> div').get(0).clientHeight) {
-          clearInterval(timer)
-        } else {
-          this.props.fetchMoreNewsFeed()
-        }
-      } else {
-        clearInterval(timer)
-      }
-    }, 1000)
+    // const timer = setInterval(() => {
+    //   if (!window.isMobile && !window.isTablet) {
+    //     const $newsfeed = $('#newsfeed')
+    //     if ($newsfeed.height() < $newsfeed.find('> div').get(0).clientHeight) {
+    //       clearInterval(timer)
+    //     } else {
+    //       this.props.fetchMoreNewsFeed()
+    //     }
+    //   } else {
+    //     clearInterval(timer)
+    //   }
+    // }, 1000)
   }
 
   componentWillUnmount() {
-    this.unmountOnScrollHandler()
+    // this.unmountOnScrollHandler()
+  }
+
+  handleAccounts(accounts) {
+    this.setState({accounts});
+  }
+
+  renderItem(index, key) {
+    return <div key={key}>{this.state.accounts[index].name}</div>;
   }
 
   mountOnScrollHandler() {
-    if (window.isMobile) {
-      const throttled = _.throttle(this.onScrollNewsFeedMobile, 500)
-      $(window).scroll(throttled)
-    } else {
-      const throttled = _.throttle(this.onScrollNewsFeedDesktop, 500)
-      $('#newsfeed').scroll(throttled)
-    }
+    // if (window.isMobile) {
+    //   const throttled = _.throttle(this.onScrollNewsFeedMobile, 500)
+    //   $(window).scroll(throttled)
+    // } else {
+    //   const throttled = _.throttle(this.onScrollNewsFeedDesktop, 500)
+    //   $('#newsfeed').scroll(throttled)
+    // }
   }
 
   unmountOnScrollHandler() {
-    $(window).off('scroll', this.onScrollNewsFeedMobile)
-    $('#newsfeed').off('scroll', this.onScrollNewsFeedDesktop)
+    // $(window).off('scroll', this.onScrollNewsFeedMobile)
+    // $('#newsfeed').off('scroll', this.onScrollNewsFeedDesktop)
   }
 
   onScrollNewsFeedMobile(e) {
-    const $this = $(e.currentTarget)
-    const bufferSpace = $this.height() / 3 + 300
+    // const $this = $(e.currentTarget)
+    // const bufferSpace = $this.height() / 3 + 300
 
-    if (
-      $this.scrollTop() + $this.height() + bufferSpace >=
-      $(document).height()
-    ) {
-      this.props.fetchMoreNewsFeed()
-    }
+    // if (
+    //   $this.scrollTop() + $this.height() + bufferSpace >=
+    //   $(document).height()
+    // ) {
+    //   this.props.fetchMoreNewsFeed()
+    // }
   }
 
   onScrollNewsFeedDesktop(e) {
-    const $this = $(e.currentTarget)
-    const bufferSpace = $this.height() / 3 + 400
-    if (
-      $this.scrollTop() + $this.innerHeight() + bufferSpace >=
-      $this[0].scrollHeight
-    ) {
-      this.props.fetchMoreNewsFeed()
-    }
+    // const $this = $(e.currentTarget)
+    // const bufferSpace = $this.height() / 3 + 400
+    // if (
+    //   $this.scrollTop() + $this.innerHeight() + bufferSpace >=
+    //   $this[0].scrollHeight
+    // ) {
+    //   this.props.fetchMoreNewsFeed()
+    // }
   }
 
   setActiveNewsItem = (newsItem) => {
@@ -141,7 +276,23 @@ class NewsList extends Component {
               ? {marginTop: '-65px', background: '#fff', position:'absolute'}
               : {}
           }>
-          {this.renderView(viewState, itemHeight, activeFilters, sortedNewsItems, initialRenderTips)}
+          {/* {this.renderView(viewState, itemHeight, activeFilters, sortedNewsItems, initialRenderTips)} */}
+
+
+
+          { examples.map((props, key) => {
+            return (
+          <div key={key} className={`example axis-${props.axis}`}>
+            <strong>Props</strong>
+            <pre className='props'>{JSON.stringify(props, null, 2)}</pre>
+            <strong>Component</strong>
+            <div className='component'><ReactList {...props} /></div>
+          </div>
+            )
+          }) }
+
+
+
           <div>
             {!isLoading('newsItems') &&
               isLoading('newsfeed') && <LoadingIndicator />}
