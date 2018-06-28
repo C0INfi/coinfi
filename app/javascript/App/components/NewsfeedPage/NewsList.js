@@ -3,9 +3,12 @@ import _ from 'lodash'
 import NewsListItem from './NewsListItem'
 import LoadingIndicator from '../LoadingIndicator'
 import Tips from './Tips'
+import Infinite from 'react-infinite'
 
 class NewsList extends Component {
-  state = { initialRender: true, initialRenderTips:false }
+  state = { initialRender: true, initialRenderTips:false,
+            isInfiniteLoading: false
+  }
 
   constructor(props) {
     super(props)
@@ -16,32 +19,32 @@ class NewsList extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ initialRender: false })
-    }, 6000)
-    this.mountOnScrollHandler()
+    // setTimeout(() => {
+    //   this.setState({ initialRender: false })
+    // }, 6000)
+    // this.mountOnScrollHandler()
   }
 
   componentDidUpdate() {
-    const timer = setInterval(() => {
-      if (!window.isMobile && !window.isTablet) {
-        const $newsfeed = $('#newsfeed')
-        if ($newsfeed.height() < $newsfeed.find('> div').get(0).clientHeight) {
-          clearInterval(timer)
-        } else {
-          this.props.fetchMoreNewsFeed()
-        }
-      } else {
-        clearInterval(timer)
-      }
-    }, 1000)
+    // const timer = setInterval(() => {
+    //   if (!window.isMobile && !window.isTablet) {
+    //     const $newsfeed = $('#newsfeed')
+    //     if ($newsfeed.height() < $newsfeed.find('> div').get(0).clientHeight) {
+    //       clearInterval(timer)
+    //     } else {
+    //       this.props.fetchMoreNewsFeed()
+    //     }
+    //   } else {
+    //     clearInterval(timer)
+    //   }
+    // }, 1000)
   }
 
   componentWillUnmount() {
-    this.unmountOnScrollHandler()
+    // this.unmountOnScrollHandler()
   }
 
-  mountOnScrollHandler() {
+  mountOnScrollHandler() {//{{{
     if (window.isMobile) {
       const throttled = _.throttle(this.onScrollNewsFeedMobile, 500)
       $(window).scroll(throttled)
@@ -54,7 +57,7 @@ class NewsList extends Component {
   unmountOnScrollHandler() {
     $(window).off('scroll', this.onScrollNewsFeedMobile)
     $('#newsfeed').off('scroll', this.onScrollNewsFeedDesktop)
-  }
+  }//}}}
 
   onScrollNewsFeedMobile(e) {
     const $this = $(e.currentTarget)
@@ -111,6 +114,7 @@ class NewsList extends Component {
       )
     }
 
+
     const mappedItems = viewState.sortedNewsItems.map((newsItem) => (
       <NewsListItem
         key={newsItem.get('id')}
@@ -121,6 +125,23 @@ class NewsList extends Component {
     ))
     return mappedItems
   }
+
+    handleInfiniteLoad() {
+        console.log('handler')
+        var that = this;
+        this.setState({
+            isInfiniteLoading: true
+        });
+        setTimeout(function() {
+            var elemLength = that.state.elements.length,
+                newElements = that.buildElements(elemLength, elemLength + 100);
+            that.setState({
+                isInfiniteLoading: false,
+                elements: that.state.elements.concat(newElements)
+            });
+        }, 2500);
+
+    }
 
 
   render() {
@@ -141,7 +162,17 @@ class NewsList extends Component {
               ? {marginTop: '-65px', background: '#fff', position:'absolute'}
               : {}
           }>
+          <Infinite
+            elementHeight={200}
+            containerHeight={1200}
+            infiniteLoadBeginEdgeOffset={200}
+            onInfiniteLoad={() => this.handleInfiniteLoad}
+            timeScrollStateLastsForAfterUserScrolls={1000}
+          >
           {this.renderView(viewState, itemHeight, activeFilters, sortedNewsItems, initialRenderTips)}
+        </Infinite>
+
+
           <div>
             {!isLoading('newsItems') &&
               isLoading('newsfeed') && <LoadingIndicator />}
