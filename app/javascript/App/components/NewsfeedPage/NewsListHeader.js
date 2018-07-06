@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { Fragment } from "react"
 import Icon from "../Icon"
 import SectionHeader from "./SectionHeader"
