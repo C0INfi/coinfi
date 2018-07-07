@@ -5,6 +5,7 @@ import NewsListHeader from './NewsListHeader'
 import BodySection from './BodySection'
 
 export default function(props) {
+    console.log('LayoutDesktop')
   return (
     <div className="flex flex-column flex-auto">
       <div className="row no-gutter flex-auto bg-white">

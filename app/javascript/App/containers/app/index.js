@@ -9,6 +9,6 @@ export default createHOC({
   actions,
   selectors,
   onMount({ props }) {
-    props.fetchUser()
+    // props.fetchUser()
   }
 })

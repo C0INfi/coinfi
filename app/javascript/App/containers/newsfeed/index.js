@@ -8,6 +8,7 @@ export default createHOC({
   selectors,
   extraProps: { filterList },
   onMount: ({ props }) => {
+    console.log('newsfeed container mount')
     props.initializeFilters()
     props.initializeNewsfeedState()
   }

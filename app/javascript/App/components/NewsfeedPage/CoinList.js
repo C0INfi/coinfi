@@ -25,6 +25,7 @@ class CoinList extends Component {
   }
   render() {
     const { isLoading, currentUI, isWatching, searchedCoins } = this.props
+    console.log('coin list add to', this.props.addToCoinList)
     let { coins } = this.props
     if (currentUI('watchingOnly')) {
       coins = coins.filter((coin) => isWatching(coin.get('id')))
@@ -53,6 +54,7 @@ class CoinList extends Component {
                     {...{ coin, key, ...this.props }}
                     onClick={this.newCoinHandler}
                     onWatch={this.newCoinHandler}
+                    addToCoinList={this.props.addToCoinList}
                   />
                 ))}
               </div>
