@@ -121,9 +121,20 @@ class NewsList extends Component {
         newsItem={newsItem}
         {...this.props}
         setActiveNewsItem={this.setActiveNewsItem}
+        selectCoin={this.selectCoin}
       />
     ))
     return mappedItems
+  }
+
+  selectCoin(event, coinSymbol) {
+  console.log('select')
+    const { setFilter, clearSearch, setActiveEntity } = this.props
+    setActiveEntity({ type: 'coin', id: coin.get('id') })
+    let value = this.selectedCoins()
+    value = union(value, [coin.get('name')])
+    setFilter({ key: 'coins', value })
+    clearSearch()
   }
 
 
