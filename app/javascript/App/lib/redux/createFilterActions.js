@@ -18,6 +18,7 @@ export default (namespace) => ({
     return { namespace, type: 'ON_FILTER_INITIALIZE', payload }
   },
   setFilters: (payload) => {
+  console.log('filter action')
     return { namespace, type: 'SET_FILTERS', payload }
   }
 })

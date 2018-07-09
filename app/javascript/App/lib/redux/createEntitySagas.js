@@ -30,6 +30,7 @@ export default (namespace) => {
   }
 
   function* fetchEntityList(action) {
+      console.log('actions.setEntityList', actions.setEntityList)
     yield createFetchEntityList(action, actions.setEntityList)
   }
 
@@ -45,7 +46,8 @@ export default (namespace) => {
     if (action.namespace !== namespace) return
     const { entityType, url, params } = action
     const endpoint = url || pluralize(entityType)
-    yield apiSagas.get(`/${endpoint}.json`, { q: params }, (response) =>
+    console.log('refactor params', params, action.params)
+    yield apiSagas.get(`/${endpoint}.json`, params, (response) =>
       callbackAction(entityType, response)
     )
   }

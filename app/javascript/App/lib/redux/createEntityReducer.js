@@ -41,6 +41,7 @@ const createEntityReducer = (namespace) => (state = initialState, action) => {
       normalizer = normalizers[entityType]
       if (!normalizer) console.error(`No normalizer found for ${entityType}`)
       normalized = normalizer(response)
+      console.log('normalized', normalized)
       entityLists = state.get('entityList').mergeDeep(normalized.entities)
       const ids = _.union(
         normalized.result,

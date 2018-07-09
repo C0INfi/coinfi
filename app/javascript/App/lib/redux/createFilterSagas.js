@@ -24,6 +24,7 @@ export default function(namespace) {
     if (action.namespace !== namespace) return
     let queryStringPresent = false
     let filterObject = getQueryObject().q
+      console.log('filterObject', filterObject)
     if (filterObject) {
       yield put(actions.setFilters(filterObject))
       queryStringPresent = true
@@ -31,6 +32,8 @@ export default function(namespace) {
       const activeFilters = yield select(selectors.activeFilters)
       if (activeFilters.size > 0) {
         filterObject = buildFilterObject(activeFilters)
+        console.log(filterObject)
+
         pushObjectToURL({ q: filterObject })
       }
     }
@@ -39,11 +42,14 @@ export default function(namespace) {
 
   function* applyFilters(action) {
     /* Updates the querystring based on state, and calls onChange if present */
+    console.log('apply filter')
     if (action.namespace !== namespace) return
     const activeFilters = yield select(selectors.activeFilters)
     const filterObject = buildFilterObject(activeFilters)
+
     pushObjectToURL({ q: filterObject })
-    yield put(actions.onFilterChange({ filterObject, payload: action.payload }))
+      console.log(filterObject)
+    // yield put(actions.onFilterChange({ filterObject, payload: action.payload }))
   }
 
   return watcher

@@ -23,7 +23,9 @@ const createFilterReducer = ({ namespace, filterList }) => (
   const removeFilter = (key) =>
     state.deleteIn(['activeFilters', filterIndex(key)])
   const setFilter = (state, { key, value }) => {
+    console.log('set filter')
     if (isEmpty(value)) return removeFilter(key)
+      console.log('filterObject', filterObject(key, value))
     return state.setIn(
       ['activeFilters', filterIndex(key)],
       filterObject(key, value)

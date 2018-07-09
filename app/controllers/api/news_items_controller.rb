@@ -41,13 +41,13 @@ class Api::NewsItemsController < ApiController
       @news_items = @news_items.where('title ILIKE ?', "%#{params[:keywords]}%")
     end
 
-    if params[:published_since].present?
-      published_since = Time.at(params[:published_since].to_i).to_datetime
+    if params[:publishedSince].present?
+      published_since = Time.at(params[:publishedSince].to_i).to_datetime
       @news_items = @news_items.where('feed_item_published_at > ?', published_since)
     end
 
-    if params[:published_until].present?
-      published_until = Time.at(params[:published_until].to_i).to_datetime
+    if params[:publishedUntil].present?
+      published_until = Time.at(params[:publishedUntil].to_i).to_datetime
       @news_items = @news_items.where('feed_item_published_at < ?', published_until)
     end
 

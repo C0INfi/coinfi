@@ -10,11 +10,13 @@ export default {
   destroy
 }
 export function* get(url, params, callback, selector = false) {
+console.log('get')
   try {
     let response = null
     if (selector) {
       response = yield select(selector())
     }
+      debugger
     if (!response) {
       response = yield call(API.get, url, params)
     }

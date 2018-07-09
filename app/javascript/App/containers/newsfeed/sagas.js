@@ -48,6 +48,8 @@ function* onFilterChange(action) {
 function* fetchNewsItems(action) {
   if (action.namespace !== namespace) return
   const params = yield newsitemParams()
+
+    console.log('fetch', actions.fetchEntityList('newsItems', { params, url: 'news_items' }))
   yield put(
     actions.fetchEntityList('newsItems', {
       params,
@@ -83,11 +85,15 @@ function* onSetActiveCoin(action) {
 
 function* newsitemParams() {
   const activeFilters = yield select(selectors.activeFilters)
+
   let params = buildFilterObject(activeFilters)
   if (!params.coins) {
     const coins = yield select(selectors.coins)
-    params.coinIDs = coins.map((coin) => coin.get('id'))
+    params.coinIDs = coins.map((coin) => coin.get('name'))
   }
+  console.log(params)
+
+  params = { coins: ['Ripple'], categories: ['Exchange Listings'] }
   return params
 }
 
