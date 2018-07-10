@@ -99,7 +99,7 @@ twitterwidget {
 }
 
 .filter-btn {
-  width: 130px;
+  width: 170px;
 }
 
 .btn.filter-btn, .btn.coins-btn {
@@ -140,6 +140,10 @@ twitterwidget {
 @media only screen and (min-width:1200px) {
   .coins-btn {
     display:none;
+  }
+
+  .filter-btn {
+    width: 130px;
   }
 }
 
