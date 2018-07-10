@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import _ from 'lodash'
+import { DateTime } from 'luxon'
 import NewsListItem from './NewsListItem'
 import LoadingIndicator from '../LoadingIndicator'
 import Tips from './Tips'
@@ -104,7 +105,6 @@ class NewsList extends Component {
           </div>
         </div>
       )
-
     }
     else if (!viewState.sortedNewsItems.length) {
       return (
@@ -121,24 +121,25 @@ class NewsList extends Component {
       )
     }
 
-    window.latestNewsTime = viewState.sortedNewsItems[0].get('feed_item_published_at')
-
     const mappedItems = viewState.sortedNewsItems.map((newsItem) => {
-
-      // compare date of last news item with store
-      // apply treatment
-      // store date of last news item
-
+      let newItem = 0
+      if (window.latestNewsTime) {
+        const latestNewsTime = DateTime.fromISO(window.latestNewsTime)
+        const thisNewsTime = DateTime.fromISO(newsItem.get('feed_item_published_at'))
+        latestNewsTime < thisNewsTime ? newItem = 1 : ''
+      }
       return (
         <NewsListItem
           key={newsItem.get('id')}
           newsItem={newsItem}
           {...this.props}
+          newItem={newItem}
           setActiveNewsItem={this.setActiveNewsItem}
           selectCoin={(symbol) => this.selectCoin(symbol)}
         />
       )
     })
+    window.latestNewsTime = viewState.sortedNewsItems[0].get('feed_item_published_at')
     return mappedItems
   }
 
