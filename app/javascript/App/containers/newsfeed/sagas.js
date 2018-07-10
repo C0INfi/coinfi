@@ -46,7 +46,26 @@ function* onFilterChange(action) {
 }
 
 function* fetchNewsItems(action) {
+    console.log('fetch news')
+
   if (action.namespace !== namespace) return
+
+  const sortedNewsItems = yield select(selectors.sortedNewsItems)
+  console.log('sortedNewsItems', sortedNewsItems)
+
+  if (sortedNewsItems.length) {
+    // const firstNewsItem = sortedNewsItems[0]
+    // console.log('firstNewsItem', firstNewsItem)
+    // params.publishedUntil = lastNewsItem.get('feed_item_published_at')
+
+    // compare date of last news item with store
+    // apply treatment
+    // store date of last news item
+    window.lastNewsTime = lastNewsItem && lastNewsItem.get('feed_item_published_at')
+
+  }
+
+
   const params = yield newsitemParams()
   yield put(
     actions.fetchEntityList('newsItems', {
@@ -57,6 +76,7 @@ function* fetchNewsItems(action) {
 }
 
 function* pollNewsItems(action) {
+  console.log('poll')
   if (action.namespace !== namespace) return
   while (true) {
     yield delay(60000)
@@ -92,6 +112,7 @@ function* newsitemParams() {
 }
 
 function* onScrollingToBottom(action) {
+  console.log('btm')
   const endFetchingMoreEntityList = yield select(
     selectors.endFetchingMoreEntityList
   )
@@ -103,6 +124,7 @@ function* onScrollingToBottom(action) {
 
   if (sortedNewsItems.length) {
     const lastNewsItem = sortedNewsItems[sortedNewsItems.length - 1]
+    console.log('lastNewsItem', lastNewsItem)
     params.publishedUntil = lastNewsItem.get('feed_item_published_at')
   }
   yield put(
