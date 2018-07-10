@@ -121,15 +121,20 @@ class NewsList extends Component {
       )
     }
 
-    const mappedItems = viewState.sortedNewsItems.map((newsItem) => (
-      <NewsListItem
-        key={newsItem.get('id')}
-        newsItem={newsItem}
-        {...this.props}
-        setActiveNewsItem={this.setActiveNewsItem}
-        selectCoin={(symbol) => this.selectCoin(symbol)}
-      />
-    ))
+      const mappedItems = viewState.sortedNewsItems.map((newsItem) => {
+        // console.log('newsItem', newsItem)
+        // console.log(newsItem.get('updated_at'))
+        return (
+          <NewsListItem
+            key={newsItem.get('id')}
+            newsItem={newsItem}
+            {...this.props}
+            setActiveNewsItem={this.setActiveNewsItem}
+            selectCoin={(symbol) => this.selectCoin(symbol)}
+          />
+        )
+      }
+      )
     return mappedItems
   }
 
