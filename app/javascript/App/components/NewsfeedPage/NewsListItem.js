@@ -1,10 +1,24 @@
 import React from 'react'
 import timeago from 'timeago.js'
 import NewsCoinTags from './NewsCoinTags'
+import Animate from 'react-move/Animate';
+import { easeExpOut } from 'd3-ease';
 
 class NewsListItem extends React.Component {
+  state = {
+    show: false,
+  }
+
+  updateShow = () => {
+    this.setState((prev) => ({ show: !prev.show }));
+  }
+
   render() {
     const { activeEntity, newsItem, setActiveNewsItem, preRender, selectCoin, newItem } = this.props
+
+
+    const { updateShow, updateColor, state: { show } } = this;
+
     let className = 'b--b tiber overflow-hidden'
     if (activeEntity) {
       const { type, id } = activeEntity
@@ -16,6 +30,56 @@ class NewsListItem extends React.Component {
     const style = newItem ? { height: this.props.height || 'auto', border: 'solid 1px #2faeed', transition: 'all 0.3 s linear' } : { height: this.props.height || 'auto' }
     return (
       <div className={className} style={style}>
+
+      <div>
+        <button onClick={updateShow}>
+          Toggle
+        </button>
+        <Animate
+          show={show}
+
+          start={{
+            opacity: 0,
+            backgroundColor: '#0000ff',
+          }}
+
+          enter={{
+            opacity: [1],
+            backgroundColor: ['#00ff00'],
+            timing: { duration: 2000 },
+          }}
+
+          update={{ // catch interrupts e.g. click button in middle of leave
+            opacity: [1],
+            backgroundColor: ['#00ff00'],
+            timing: { duration: 2000 },
+          }}
+
+          leave={{
+            opacity: [0],
+            backgroundColor: ['#ff0000'],
+            timing: { duration: 2000 },
+          }}
+        >
+          {({ opacity, backgroundColor }) => {
+            return (
+              <div style={{
+                opacity,
+                width: 200,
+                height: 200,
+                marginTop: 10,
+                color: 'white',
+                backgroundColor,
+              }}
+              >
+                {opacity.toFixed(3)}
+              </div>
+            );
+          }}
+        </Animate>
+      </div>
+
+
         <div className="pa3">
           <div className="pointer" onClick={
             () => {
