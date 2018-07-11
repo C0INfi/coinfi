@@ -15,6 +15,7 @@ class SearchCoins extends Component {
   handleSearchInput = (value) => {
     let { searchCoins } = this.props
     const name_not_in = this.selectedCoins()
+      console.log('handle search')
     searchCoins(value, { q: { name_not_in }, limit: 10 })
   }
   selectCoin = (coin) => {
