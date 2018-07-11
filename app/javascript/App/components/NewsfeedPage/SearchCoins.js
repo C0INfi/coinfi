@@ -86,8 +86,9 @@ class SearchCoins extends Component {
                     onWatch={onWatch}
                     hasText
                     addCoinsToWatchlist={addCoinsToWatchlist()}
-                    searchCoins={searchCoins} {/* send searchCoins method to WatchButton */}
+                    searchCoins={searchCoins}
                   />
+				  {/* send searchCoins method to WatchButton */}
                 </div>
               </li>
             ))}
