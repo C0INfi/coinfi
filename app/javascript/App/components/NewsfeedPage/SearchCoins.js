@@ -36,6 +36,7 @@ class SearchCoins extends Component {
       onWatch,
       addCoinsToWatchlist
     } = this.props
+
     return (
       <div className="search-field">
         <div className="flex items-center ph2 f5 tiber">
@@ -81,7 +82,7 @@ class SearchCoins extends Component {
                     user={user}
                     onWatch={onWatch}
                     hasText
-                    addCoinsToWatchlist={addCoinsToWatchlist}
+                    addCoinsToWatchlist={addCoinsToWatchlist()}
                   />
                 </div>
               </li>
