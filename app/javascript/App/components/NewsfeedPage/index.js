@@ -15,6 +15,7 @@ class NewsfeedPage extends Component {
   }
 
   componentDidMount() {
+    console.log('did mount')
     window.twttr = (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0],
         t = window.twttr || {};
@@ -31,6 +32,21 @@ class NewsfeedPage extends Component {
 
       return t;
     }(document, "script", "twitter-wjs"));
+
+    // var req = '/api/coins.json?q%5Bsymbol_cont%5D=BAS'
+    // console.log('componentDidMount')
+    // axios
+    //   .get(`req`)
+    //   .then(({ data: { data: { children } } }) => {
+    //     this.setState({ posts: children })
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+  }
+
+  addCoinsToWatchlist(symbol) {
+    console.log('added ', symbol)
   }
 
   newsfeedTips() {
@@ -43,7 +59,7 @@ class NewsfeedPage extends Component {
     } else if (window.isTablet) {
       return <LayoutTablet {...this.props} initialRenderTips={this.state.initialRenderTips} />
     } else {
-      return <LayoutDesktop {...this.props} initialRenderTips={this.state.initialRenderTips} />
+      return <LayoutDesktop {...this.props} initialRenderTips={this.state.initialRenderTips} addCoinsToWatchlist={() => this.addCoinsToWatchlist} />
     }
   }
 }

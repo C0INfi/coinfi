@@ -16,7 +16,8 @@ const NewsListHeader = props => {
     feedSources,
     activeFilters,
     activeEntity,
-    newsfeedTips
+    newsfeedTips,
+    addCoinsToWatchlist
   } = props
   const toggleFilters = () =>
     enableUI("filterPanel", { fullScreen: window.isMobile })
@@ -25,6 +26,7 @@ const NewsListHeader = props => {
     padding: "18px",
     borderRadius: 0
   }
+
 
   return (
     <Fragment>

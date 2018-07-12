@@ -15,6 +15,7 @@ class SearchCoins extends Component {
   handleSearchInput = (value) => {
     let { searchCoins } = this.props
     const name_not_in = this.selectedCoins()
+	// todo: handle search input
     searchCoins(value, { q: { name_not_in }, limit: 10 })
   }
   selectCoin = (coin) => {
@@ -34,7 +35,11 @@ class SearchCoins extends Component {
       updateUser,
       user,
       onWatch,
+      addCoinsToWatchlist,
+	  searchCoins
     } = this.props
+
+
     return (
       <div className="search-field">
         <div className="flex items-center ph2 f5 tiber">
@@ -80,7 +85,10 @@ class SearchCoins extends Component {
                     user={user}
                     onWatch={onWatch}
                     hasText
+                    addCoinsToWatchlist={addCoinsToWatchlist()}
+                    searchCoins={searchCoins}
                   />
+				  {/* send searchCoins method to WatchButton */}
                 </div>
               </li>
             ))}
