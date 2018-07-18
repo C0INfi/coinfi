@@ -58,9 +58,9 @@ class Coin < ApplicationRecord
   def price_by_currency(currency)
     price.try(:[], currency)
   end
-  
+
   def prices_data
-    # TODO: expires_in should probably be at midnight 
+    # TODO: expires_in should probably be at midnight
     Rails.cache.fetch("#{symbol}_prices_data", expires_in: 1.day) do
       url = "#{ENV.fetch('COINFI_PRICES_URL')}api/v1/coins/#{symbol}/daily_history.json"
       response = HTTParty.get(url)
@@ -68,24 +68,24 @@ class Coin < ApplicationRecord
     end
   end
 
-  def news_data(currency = 'usd')
+  def news_data
     # TODO: add caching
-    chart_data = articles.chart_data
+    chart_data = news_items.chart_data
     i = chart_data.length + 1
-    chart_data.map { |item|
+    chart_data.map do |item|
       i -= 1
       {
-        x: item.published_epoch,
+        # Timestamp needs to be in JS epoch format.
+        x: item.feed_item_published_at.to_i * 1000,
         title: i,
         text: item.title,
         url: item.url
       }
-    }
+    end
   end
 
   def is_being_watched
     # Only use this for serialization
     current_user && current_user.coins.include?(self)
   end
-  
 end
