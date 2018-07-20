@@ -17,11 +17,10 @@ class NewsList extends Component {
     this.onScrollNewsFeedDesktop = this.onScrollNewsFeedDesktop.bind(this)
   }
 
-
   componentDidMount() {
     setTimeout(() => {
       this.setState({ initialRender: false })
-    }, 60000)
+    }, 3000)
     this.mountOnScrollHandler()
   }
 
@@ -33,6 +32,11 @@ class NewsList extends Component {
     }, 60000)
     clearInterval(timer)
   }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        // console.log(nextProps, nextState)
+        return nextProps.newsItems != this.props.newsItems;
+    }
 
   componentWillUnmount() {
     this.unmountOnScrollHandler()
