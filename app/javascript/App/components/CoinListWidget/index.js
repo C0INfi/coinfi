@@ -28,6 +28,28 @@ class CoinList extends Component {
     if (currentUI('watchingOnly')) {
       coins = coins.filter((coin) => isWatching(coin.get('id')))
     }
+    const coinArr = [
+      'BTC',
+      'ETH',
+      'XRP',
+      'BCH',
+      'EOS',
+      'XLM',
+      'LTC',
+      'ADA',
+      'MIOTA',
+      'USDT',
+      'TRX',
+      'XMR',
+      'NEO',
+      'DASH',
+      'ETC',
+      'XEM',
+      'VEN',
+      'BNB',
+      'XTZ',
+      'OMG',
+    ]
     return (
       <Fragment>
         <CoinListHeader {...this.props} />
@@ -49,16 +71,25 @@ class CoinList extends Component {
           {isLoading('coins') && (
             <LoadingIndicator className="overlay bg-white-70" />
           )}
+
           {coins.map((coin, index) => {
-            return (
-              <CoinListItem
-                key={index}
-                coin={coin}
-                {...this.props}
-                onClick={this.setActiveCoin}
-              />
-            )
+            console.log('coins', coin)
+            coinArr.push(coin.get('symbol'))
+            if (coinArr.includes(coin.get('symbol'))) {
+              return (
+                <CoinListItem
+                  key={index}
+                  coin={coin}
+                  {...this.props}
+                  onClick={this.setActiveCoin}
+                />
+              )
+            }
+              return (
+                  <Fragment />
+              )
           })}
+          {console.log('coins', coinArr)}
         </div>
       </Fragment>
     )

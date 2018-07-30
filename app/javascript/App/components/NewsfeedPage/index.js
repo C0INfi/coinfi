@@ -36,16 +36,42 @@ class NewsfeedPage extends Component {
       },
     )
 
+    const coinArr = [
+      'BTC',
+      'ETH',
+      'XRP',
+      'BCH',
+      'EOS',
+      'XLM',
+      'LTC',
+      'ADA',
+      'MIOTA',
+      'USDT',
+      'TRX',
+      'XMR',
+      'NEO',
+      'DASH',
+      'ETC',
+      'XEM',
+      'VEN',
+      'BNB',
+      'XTZ',
+      'OMG',
+    ]
+
     axios
       .get(req)
       .then((data) => {
         const str = data.data.payload[0]
         if (this.props.coins.length) {
-          let newMap = Immutable.Map(str)
-          liveCoinArrAdd.push(newMap)
-          liveCoinArrAdd = _.uniqBy(liveCoinArrAdd, (value) => {
-            return value.get('symbol')
-          })
+            let newMap = Immutable.Map(str)
+            console.log('new map')
+          if (coinArr.includes(newMap.get('symbol'))) {
+            liveCoinArrAdd.push(newMap)
+            liveCoinArrAdd = _.uniqBy(liveCoinArrAdd, (value) => {
+              return value.get('symbol')
+            })
+          }
         }
       })
       .catch((error) => {
