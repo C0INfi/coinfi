@@ -43,25 +43,16 @@ class CoinShow extends Component {
 
   watchCoinHandler = () => {
     this.setState({
-      watched: !this.state.watched
+      watched: !this.state.watched,
     })
     axios
-      .patch('/api/user', {"watchCoin":this.props.coinObj.id})
+      .patch('/api/user', { watchCoin: this.props.coinObj.id })
       .then((data) => {
-          console.log(data)
-        // const str = data.data.payload[0]
-        // if (this.props.coins.length) {
-        //   let newMap = Immutable.Map(str)
-        //   liveCoinArrAdd.push(newMap)
-        //   liveCoinArrAdd = _.uniqBy(liveCoinArrAdd, (value) => {
-        //     return value.get('symbol')
-        //   })
-        // }
+        console.log(data)
       })
       .catch((error) => {
         console.log(error)
       })
-
   }
 
   changeCurrencyHandler = ({ key }) => {
@@ -144,16 +135,16 @@ class CoinShow extends Component {
                       USD <Icon type="down" />
                     </Button>
                   </Dropdown>
-                    <Button
-                      icon="star"
-                      size="small"
-                      type="primary"
-                      onClick={this.watchCoinHandler}
-                      ghost={this.state.watched}
-                      loading={false}
-                    >
-                      Watch coin
-                    </Button>
+                  <Button
+                    icon="star"
+                    size="small"
+                    type="primary"
+                    onClick={this.watchCoinHandler}
+                    ghost={this.state.watched}
+                    loading={false}
+                  >
+                    Watch coin
+                  </Button>
                 </ButtonWrap>
                 <Section>
                   <Div>
