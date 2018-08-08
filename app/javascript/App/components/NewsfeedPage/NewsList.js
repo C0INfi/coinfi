@@ -3,11 +3,11 @@ import _ from 'lodash'
 import NewsListItem from './NewsListItem'
 import LoadingIndicator from '../LoadingIndicator'
 import Tips from './Tips'
-import { easeBackOut, easeBackInOut } from 'd3-ease';
-import NodeGroup from 'react-move/NodeGroup';
+import { easeBackOut, easeBackInOut } from 'd3-ease'
+import NodeGroup from 'react-move/NodeGroup'
 
 class NewsList extends Component {
-  state = { initialRender: true, initialRenderTips:false }
+  state = { initialRender: true, initialRenderTips: false }
 
   constructor(props) {
     super(props)
@@ -33,10 +33,10 @@ class NewsList extends Component {
     clearInterval(timer)
   }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        // console.log(nextProps, nextState)
-        return nextProps.newsItems != this.props.newsItems;
-    }
+  shouldComponentUpdate(nextProps, nextState) {
+    // console.log(nextProps, nextState)
+    return nextProps.newsItems != this.props.newsItems
+  }
 
   componentWillUnmount() {
     this.unmountOnScrollHandler()
@@ -124,7 +124,6 @@ class NewsList extends Component {
         </div>
       )
     }
-
   }
 
   selectCoin(coinData) {
@@ -140,7 +139,14 @@ class NewsList extends Component {
 
   render() {
     const itemHeight = this.state.initialRender ? 'auto' : 0
-    const { newsItems, isLoading, activeEntity, activeFilters, sortedNewsItems, initialRenderTips } = this.props
+    const {
+      newsItems,
+      isLoading,
+      activeEntity,
+      activeFilters,
+      sortedNewsItems,
+      initialRenderTips,
+    } = this.props
 
     const viewState = {
       activeEntity: activeEntity,
@@ -153,72 +159,80 @@ class NewsList extends Component {
           id="newsfeed"
           className="flex-auto relative overflow-y-hidden overflow-y-auto-m"
           style={
-            !activeEntity && window.isMobile && !activeFilters.size && initialRenderTips
-              ? {marginTop: '-65px', background: '#fff', position:'absolute'}
+            !activeEntity &&
+            window.isMobile &&
+            !activeFilters.size &&
+            initialRenderTips
+              ? { marginTop: '-65px', background: '#fff', position: 'absolute' }
               : {}
-          }>
-          {this.renderView(viewState, itemHeight, activeFilters, sortedNewsItems, initialRenderTips, isLoading)}
+          }
+        >
+          {this.renderView(
+            viewState,
+            itemHeight,
+            activeFilters,
+            sortedNewsItems,
+            initialRenderTips,
+            isLoading,
+          )}
 
           <NodeGroup
             data={viewState.sortedNewsItems}
             keyAccessor={(d) => d}
-
             start={() => ({
               opacity: 0,
-              backgroundColor: '#fff'
+              backgroundColor: '#fff',
             })}
-
             enter={() => {
-              return ([
+              return [
                 {
                   timing: { delay: 500, duration: 500, ease: easeBackOut },
                 },
                 {
                   opacity: [1],
                   timing: { duration: 500 },
-                  backgroundColor: ['#fff', '#eff9fe']
+                  backgroundColor: ['#fff', '#eff9fe'],
                 },
-              ])
-            }
-            }
-
+              ]
+            }}
             update={() => ({
-                  timing: { duration: 500 },
-                  backgroundColor: ['#eff9fe', '#fff']
+              timing: { duration: 500 },
+              backgroundColor: ['#eff9fe', '#fff'],
             })}
-
-            leave={() => ([
+            leave={() => [
               {
-                  timing: { duration: 500 },
-                  backgroundColor: ['#eff9fe', '#fff']
+                timing: { duration: 500 },
+                backgroundColor: ['#eff9fe', '#fff'],
               },
               {
-                  timing: { duration: 500 },
-                  backgroundColor: ['#eff9fe', '#fff']
+                timing: { duration: 500 },
+                backgroundColor: ['#eff9fe', '#fff'],
               },
-            ])}
+            ]}
           >
             {(nodes) => (
               <div style={{ margin: 10, position: 'relative' }}>
-                {nodes.map(({ key, state: { x, opacity, backgroundColor } }) => (
-                  <div
-                    key={key}
-                    style={{
-                      transform: `translate(${x}px, ${key * 20}px)`,
-                      opacity,
-                      backgroundColor
-                    }}
-                  >
-                  <NewsListItem
+                {nodes.map(
+                  ({ key, state: { x, opacity, backgroundColor } }) => (
+                    <div
                       key={key}
-                      newsItem={key}
-                      {...this.props}
-                      setActiveNewsItem={this.setActiveNewsItem}
-                      selectCoin={(symbol) => this.selectCoin(symbol)}
-                      bgColor={backgroundColor}
-                  />
-                  </div>
-                ))}
+                      style={{
+                        transform: `translate(${x}px, ${key * 20}px)`,
+                        opacity,
+                        backgroundColor,
+                      }}
+                    >
+                      <NewsListItem
+                        key={key}
+                        newsItem={key}
+                        {...this.props}
+                        setActiveNewsItem={this.setActiveNewsItem}
+                        selectCoin={(symbol) => this.selectCoin(symbol)}
+                        bgColor={backgroundColor}
+                      />
+                    </div>
+                  ),
+                )}
               </div>
             )}
           </NodeGroup>
