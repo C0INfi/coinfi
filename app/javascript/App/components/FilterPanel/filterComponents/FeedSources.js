@@ -1,9 +1,10 @@
 import React from 'react'
 import Type from 'prop-types'
 import _ from 'lodash'
-import ItemSelector from '../../ItemSelectorAlt'
+import ItemSelectorAlt from '../../ItemSelectorAlt'
 
-const FeedSources = ({ feedSources, value, onChange }) => {
+const FeedSources = ({ feedSources, value, onChange, addRemoveHandler }) => {
+console.log('onChange', onChange)
   const sortedSources = _.sortBy(feedSources.map((item) => {
     if (/www/.exec(item) !== null)
       return item.replace('www.', '').concat('.www')
@@ -11,10 +12,11 @@ const FeedSources = ({ feedSources, value, onChange }) => {
   }))
   let sourcesSansSocial = sortedSources.filter((source) => source !== 'twitter' && source !== 'reddit')
   return (
-    <ItemSelector
+    <ItemSelectorAlt
       items={sourcesSansSocial}
       selectedItems={value}
       onChange={onChange('feedSources')}
+      addRemoveHandler={addRemoveHandler}
     />
   )
 }

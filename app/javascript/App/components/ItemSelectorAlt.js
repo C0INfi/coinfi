@@ -7,6 +7,7 @@ export default class ItemSelectorAlt extends Component {
     const selected = this.selectedItems().feedSources
                   && this.selectedItems().feedSources.length
                   && this.selectedItems().feedSources.map((item) => JSON.stringify(item))
+                  // console.log(selected)
     if (selected) {
       return selected.includes(JSON.stringify(item))
     }
@@ -17,12 +18,21 @@ export default class ItemSelectorAlt extends Component {
       items.feedSources = []
     }
     items.feedSources.push(item)
-    this.props.onChange(items.feedSources)
+    this.props.addRemoveHandler({action: 'add', value: item.feedSources})
   }
-  remove = (item) => {
-    let items = this.selectedItems().feedSources
-    items = items.filter((c) => JSON.stringify(c) !== JSON.stringify(item))
-    this.props.onChange(items)
+  remove = (removedItem) => {
+    let items = this.selectedItems()
+    const filteredItems = items.feedSources.filter(item => item !== removedItem)
+    console.log('filteredItems', filteredItems)
+    const filteredItemList = {}
+    filteredItemList['feedSources'] = filteredItems
+    // let items = this.selectedItems().feedSources
+    // items = items.filter((c) => JSON.stringify(c) !== JSON.stringify(item))
+    this.props.addRemoveHandler.call(this, {action: 'remove', value: filteredItemList})
+    // this.props.addRemoveHandler('foo')
+    // let removeArr = []
+    // removeArr.push(item)
+    // this.props.onChange(removeArr)
   }
   itemLabel = (item) => {
     if (/www/.exec(item) !== null) {
@@ -36,6 +46,7 @@ export default class ItemSelectorAlt extends Component {
 
   ItemLink = ({ item }) => {
     if (this.isSelected(item)) {
+      // console.log(item)
       return (
         <a className="mid-gray selected" onClick={() => this.remove(item)}>
           <input type="checkbox" className="mr2 w-auto" defaultChecked />

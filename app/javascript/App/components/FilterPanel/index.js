@@ -28,6 +28,21 @@ class FilterPanel extends Component {
     if (!value.length) delete filters[key]
     this.setState({ filters })
   }
+  addRemoveHandler = (item) => {
+    console.log(item)
+    if (item.action === 'add') {
+      const filters = { ...this.state.filters }
+      console.log(filters)
+      // this.setState({ filters })
+    }
+    if (item && item.value) {
+      console.log(item.value)
+      const obj = item.value
+      this.setState({ obj })
+    }
+    // filters.push(item.value)
+    // filters['feedSources'] = item.value
+  }
   applyFilters = () => {
     const { setFilters, disableUI } = this.props
     setFilters(this.state.filters)
@@ -53,6 +68,7 @@ class FilterPanel extends Component {
               onChange={this.onChange}
               value={this.state.filters}
               newsFeedStyle
+              addRemoveHandler={this.addRemoveHandler}
             />
           )
         })}
