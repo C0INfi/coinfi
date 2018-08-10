@@ -1,12 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import Type from 'prop-types'
 
 export default class ItemSelectorAlt extends Component {
   selectedItems = () => this.props.selectedItems || []
   isSelected = (item) => {
-    const selected = this.selectedItems().feedSources
-                  && this.selectedItems().feedSources.length
-                  && this.selectedItems().feedSources.map((item) => JSON.stringify(item))
+    const selected =
+      this.selectedItems().feedSources &&
+      this.selectedItems().feedSources.length &&
+      this.selectedItems().feedSources.map((item) => JSON.stringify(item))
     if (selected) {
       return selected.includes(JSON.stringify(item))
     }
@@ -24,6 +25,29 @@ export default class ItemSelectorAlt extends Component {
     items = items.filter((c) => JSON.stringify(c) !== JSON.stringify(item))
     this.props.onChange(items)
   }
+  toggleSource = (item) => {
+    console.log('item', item, this.selectedItems())
+    // let items = this.selectedItems()
+    const sources = this.selectedItems()
+    console.log(sources.FeedSources)
+    if (!sources.feedSources) {
+      sources.feedSources = []
+    }
+
+    if (sources.feedSources.includes(item)) {
+      console.log('remove')
+      const items = sources.feedSources.filter((source) => source !== item)
+      sources.feedSources = items
+    }
+    else {
+      console.log('add')
+      sources.feedSources.push(item)
+      console.log(sources)
+    }
+  }
+  // let items = this.selectedItems().feedSources
+
+  // }
   itemLabel = (item) => {
     if (/www/.exec(item) !== null) {
       item = item.replace('www.', '')
@@ -35,21 +59,19 @@ export default class ItemSelectorAlt extends Component {
   }
 
   ItemLink = ({ item }) => {
-    if (this.isSelected(item)) {
-      return (
-        <a className="mid-gray selected" onClick={() => this.remove(item)}>
-          <input type="checkbox" className="mr2 w-auto" defaultChecked />
+    console.log('check or uncheck', item)
+    return (
+      <Fragment>
+        <label
+          htmlFor={item}
+          className="mid-gray selected"
+          onClick={() => this.toggleSource(item)}
+        >
           {this.itemLabel(item)}
-        </a>
-      )
-    } else {
-      return (
-        <a className="mid-gray" onClick={() => this.add(item)}>
-          <input type="checkbox" className="mr2 w-auto" />
-          {this.itemLabel(item)}
-        </a>
-      )
-    }
+        </label>
+        <input id={item} type="checkbox" className="mr2 w-auto" />
+      </Fragment>
+    )
   }
   render() {
     const { ItemLink } = this
@@ -58,15 +80,14 @@ export default class ItemSelectorAlt extends Component {
         <ul>
           {this.props.items.map((item, i) => {
             if (/www/.exec(item) !== null) {
-              item = item.replace('.www','').replace(/^/, 'www.')
+              item = item.replace('.www', '').replace(/^/, 'www.')
             }
             return (
-            <li className="mv2" key={i}>
-              <ItemLink item={item} />
-            </li>
+              <li className="mv2" key={i}>
+                <ItemLink item={item} />
+              </li>
             )
-          }
-          )}
+          })}
         </ul>
       </div>
     )
@@ -76,5 +97,5 @@ export default class ItemSelectorAlt extends Component {
 ItemSelectorAlt.propTypes = {
   items: Type.array.isRequired,
   selectedItems: Type.object,
-  onChange: Type.func
+  onChange: Type.func,
 }
