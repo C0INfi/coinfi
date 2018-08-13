@@ -8,6 +8,7 @@ import SectionHeader from './../shared/SectionHeader'
 import newsfeedContainer from './../../containers/newsfeed'
 import FundamentalsData from './FundamentalsData'
 import LinksData from './LinksData'
+import TopNav from './TopNav'
 
 const { Content } = Layout
 
@@ -74,6 +75,7 @@ class CoinShow extends Component {
       <Fragment>
         <Layout style={{ overflow: 'auto' }}>
           <Content>
+              <TopNav>
             <Row>
               {/* Coin List Button */}
               <Col xs={24} sm={24} m={24} l={24} xl={24}>
@@ -386,6 +388,7 @@ class CoinShow extends Component {
                 </Row>
               </Col>
             </Row>
+        </TopNav>
           </Content>
         </Layout>
       </Fragment>
