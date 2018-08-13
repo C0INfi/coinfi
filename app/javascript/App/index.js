@@ -73,9 +73,29 @@ const setScreenSize = () => {
   window.isDesktop = window.screenSize === 'l'
 }
 
+const setMaxHeight = () => {
+  console.log('set max')
+  const coinDrawerList = document.querySelector('.coin-watch-list')
+  const newsfeedElem = document.querySelector('#newsfeed')
+
+  // coinDrawerList.style.maxHeight = `${coinDrawerList.offsetHeight}px`
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   setScreenSize()
   injectComponents()
 })
 
 window.addEventListener('resize', debounce(setScreenSize), 400)
+
+window.debounce = debounce
+
+if (!!document.querySelector('#newsfeed')) {
+  console.log('foo')
+  window.addEventListener('resize', debounce(setMaxHeight), 400)
+}
+
+if (!document.querySelector('#newsfeed')) {
+  window.removeEventListener('resize')
+  window.addEventListener('resize', debounce(setScreenSize), 400)
+}
