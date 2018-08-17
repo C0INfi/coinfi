@@ -1,4 +1,12 @@
-import React, { Component } from "react"
+import React, { Component } from 'react'
+import InfiniteCalendar from 'react-infinite-calendar'
+import 'react-infinite-calendar/styles.css'
+const today = new Date()
+const lastWeek = new Date(
+  today.getFullYear(),
+  today.getMonth(),
+  today.getDate() - 7,
+)
 
 export default class ItemSelectorDates extends Component {
   selectedItems = () => this.props.selectedItems || []
@@ -29,20 +37,29 @@ export default class ItemSelectorDates extends Component {
     const publishedSince =
       (this.props &&
         this.props.selectedItems &&
-        this.props.selectedItems.publishedSince) || ""
+        this.props.selectedItems.publishedSince) ||
+      ''
     const publishedUntil =
       (this.props &&
         this.props.selectedItems &&
-        this.props.selectedItems.publishedUntil) || ""
+        this.props.selectedItems.publishedUntil) ||
+      ''
 
     return (
       <div className="item-selector-alt nh1 nt1">
+          {/* <InfiniteCalendar */}
+          {/*   width={400} */}
+          {/*   height={600} */}
+          {/*   selected={today} */}
+          {/*   disabledDays={[0, 6]} */}
+          {/*   minDate={lastWeek} */}
+          {/* /> */}
         <div className="pv4">
           <div
             className="w-50 dib"
-            style={!window.isMobile ? { maxWidth: "50%" } : {}}
+            style={!window.isMobile ? { maxWidth: '50%' } : {}}
           >
-            <label className='f6'>Start Date</label>
+            <label className="f6">Start Date</label>
             <input
               type="date"
               className="from"
@@ -52,9 +69,9 @@ export default class ItemSelectorDates extends Component {
           </div>
           <div
             className="w-50 dib"
-            style={!window.isMobile ? { maxWidth: "50%" } : {}}
+            style={!window.isMobile ? { maxWidth: '50%' } : {}}
           >
-            <label className='f6'>End Date</label>
+            <label className="f6">End Date</label>
             <input
               type="date"
               className="to"
