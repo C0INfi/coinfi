@@ -7,6 +7,7 @@ import BulletSpacer from '../../components/BulletSpacer'
 import Icon from '../../components/Icon'
 
 import { NewsItem } from './types';
+import { ItemWithCoinLinkData } from '../common/types';
 
 interface NewsBodyProps {
   newsItem: NewsItem,

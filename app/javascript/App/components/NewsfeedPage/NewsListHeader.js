@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import SearchCoins from '../SearchCoins'
 import FilterPanel from '../FilterPanel'
 import FilterTags from '../FilterTags'
-import FilterBar from '../../bundles/common/components/FilterPanel/FilterBar'
+// import FilterBar from '../../bundles/common/components/FilterPanel/FilterBar'
 import CoinTipsTab from '../../bundles/common/components/CoinTipsTab'
 
 const NewsListHeader = (props) => {
@@ -29,9 +29,9 @@ const NewsListHeader = (props) => {
           showTips={newsfeedTips}
         />
       )}
-      <FilterBar {...props} toggleFilterPanel={toggleFilters}>
+      {/* <FilterBar {...props} toggleFilterPanel={toggleFilters}>
         <SearchCoins {...props} />
-      </FilterBar>
+      </FilterBar> */}
       {activeFilters.size > 0 && (
         <div className="pa3 f6 b--b bg-athens flex items-center">
           <span className="mr2">Viewing by:</span>

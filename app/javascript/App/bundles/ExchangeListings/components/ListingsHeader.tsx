@@ -1,9 +1,8 @@
-import React, { Fragment } from 'react'
-import FilterPanel from '../../common/components/FilterPanel'
-import FilterBar from '../../common/components/FilterPanel/FilterBar'
-import CoinTipsTab from '../../common/components/CoinTipsTab'
-
-const ListingsHeader = (props) => {
+import React, { Fragment } from "react";
+import FilterPanel from "../../common/components/FilterPanel";
+import FilterBar from "../../common/components/FilterPanel/FilterBar";
+import CoinTipsTab from "../../common/components/CoinTipsTab";
+const ListingsHeader = props => {
   return (
     <Fragment>
       <CoinTipsTab />
@@ -19,7 +18,6 @@ const ListingsHeader = (props) => {
         <div className="fl w-third pa2">Date Detected</div>
       </div>
     </Fragment>
-  )
-}
-
-export default ListingsHeader
+  );
+};
+export default ListingsHeader;
