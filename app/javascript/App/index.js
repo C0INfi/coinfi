@@ -124,4 +124,4 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 window.addEventListener('resize', debounce(setScreenSize), 400)
-window.addEventListener('resize', debounce(scrollHelper), 400)
+// window.addEventListener('resize', debounce(scrollHelper), 400)

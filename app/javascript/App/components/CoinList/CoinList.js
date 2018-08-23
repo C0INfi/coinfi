@@ -26,7 +26,7 @@ class CoinList extends Component {
 
   componentDidMount() {
     // set max height to enable scroll in ff
-    scrollHelper()
+    // scrollHelper()
   }
 
   render() {

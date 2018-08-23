@@ -10,7 +10,7 @@ class NewsList extends Component {
 
   componentDidMount() {
     // set max height to enable scroll in ff
-    scrollHelper()
+    // scrollHelper()
   }
 
   setActiveNewsItem = (newsItem) => {

@@ -7,6 +7,24 @@ import BulletSpacer from '../BulletSpacer'
 import Icon from '../Icon'
 
 export default class NewsBody extends Component {
+  componentDidMount() {
+    setTimeout(() => {
+      // set max height to enable scroll in ff
+      const colWrap = document.querySelector('.column-wrap')
+      const newsContent = document.querySelector('.selected-news-content')
+      const flashHeight = document.querySelector('.flash-container')
+      const filterTagWrapper = document.querySelector('.filter-tag-wrap')
+      const topNav = document.querySelector('.topnav')
+      // const calcMaxHeight =
+      //   colWrap.offsetHeight -
+      //   topNav.offsetHeight +
+      //   (flashHeight && flashHeight.offsetHeight) +
+      //   (filterTagWrapper && filterTagWrapper.offsetHeight)
+      const calcMaxHeight = window.outerHeight - topNav.offsetHeight
+      console.log('see max', window.outerHeight - topNav.offsetHeight)
+      newsContent.style.maxHeight = `${calcMaxHeight}px`
+    }, 0)
+  }
   render() {
     const {
       selectNewsItemFromList,
