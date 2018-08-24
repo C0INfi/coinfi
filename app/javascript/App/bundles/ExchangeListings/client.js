@@ -7,6 +7,7 @@ import ListingsHeader from './components/ListingsHeader'
 import ListingsList from './components/ListingsList'
 import BodySection from './components/BodySection'
 import localAPI from '~/lib/localAPI'
+import { Provider } from '~/bundles/common/context'
 
 class ExchangeListingsPage extends Component {
   constructor(props) {
@@ -160,6 +161,22 @@ class ExchangeListingsPage extends Component {
       detectedUntil: this.state.detectedUntil,
     }
 
+    const context = {
+      toggleFilterPanel: this.toggleFilterPanel,
+      showFilterPanel: this.state.showFilterPanel,
+      applyFilters: () => this.applyFilters(),
+      quoteSymbols: this.props.quoteSymbols,
+      exchanges: this.props.exchanges,
+      changeSymbol: this.changeSymbol,
+      changeExchange: this.changeExchange,
+      filterDates: this.filterDates,
+      selectedItems: selectedItems,
+      selectedSymbols: this.state.selectedSymbols,
+      selectedExchanges: this.state.selectedExchanges,
+      exchangeSlugs: this.state.exchangeSlugs,
+      resetFilters: this.resetFilters,
+    }
+
     if (window.isMobile) {
       return (
         <LayoutMobile
@@ -230,21 +247,24 @@ class ExchangeListingsPage extends Component {
           leftSection={null}
           centerSection={
             <Fragment>
-              <ListingsHeader
-                toggleFilterPanel={this.toggleFilterPanel}
-                showFilterPanel={this.state.showFilterPanel}
-                applyFilters={() => this.applyFilters()}
-                quoteSymbols={this.props.quoteSymbols}
-                exchanges={this.props.exchanges}
-                changeSymbol={this.changeSymbol}
-                changeExchange={this.changeExchange}
-                filterDates={this.filterDates}
-                selectedItems={selectedItems}
-                selectedSymbols={this.state.selectedSymbols}
-                selectedExchanges={this.state.selectedExchanges}
-                exchangeSlugs={this.state.exchangeSlugs}
-                resetFilters={this.resetFilters}
-              />
+              <Provider value={{ title: 'React In Patterns' }}>
+                <ListingsHeader
+                  toggleFilterPanel={this.toggleFilterPanel}
+                  showFilterPanel={this.state.showFilterPanel}
+                  applyFilters={() => this.applyFilters()}
+                  quoteSymbols={this.props.quoteSymbols}
+                  exchanges={this.props.exchanges}
+                  changeSymbol={this.changeSymbol}
+                  changeExchange={this.changeExchange}
+                  filterDates={this.filterDates}
+                  selectedItems={selectedItems}
+                  selectedSymbols={this.state.selectedSymbols}
+                  selectedExchanges={this.state.selectedExchanges}
+                  exchangeSlugs={this.state.exchangeSlugs}
+                  resetFilters={this.resetFilters}
+                />
+              </Provider>
+              .{' '}
               <ListingsList
                 listings={listings}
                 hasMore={hasMore}

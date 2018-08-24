@@ -1,6 +1,7 @@
 import React from 'react'
 import Select from 'react-select'
-import DateRangeListing from './../../../components/DateRangeListing'
+import DateRangeListing from '~/components/DateRangeListing'
+import { Consumer } from '~/bundles/common/context'
 
 export default (props) => {
   const selectedSymbolData = props.selectedSymbols.map(item => {
@@ -17,6 +18,10 @@ export default (props) => {
   })
 return (
   <div className="pa3">
+
+      <Consumer>{
+      ({ title }) => <h1>Title: { title }</h1>
+    }</Consumer>
     <div className="mb4">
       <h4 className="mb2">Quote Symbol</h4>
       <Select
